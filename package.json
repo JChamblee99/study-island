@@ -1,0 +1,30 @@
+{
+  "name": "study-island",
+  "version": "0.0.0",
+  "description": "A platform to organize study groups",
+  "engines": {
+    "node": "17.x"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "got": "^11.3.0",
+    "tape": "^4.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jchamblee99/study-island"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ]
+}

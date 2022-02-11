@@ -1,0 +1,6 @@
+{
+  "name": "Study Island",
+  "description": "A platform to organize study groups",
+  "repository": "https://github.com/jchamblee99/study-island",
+  "keywords": ["node", "express", "heroku"],
+}
