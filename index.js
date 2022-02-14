@@ -1,4 +1,6 @@
+
 const express = require('express');
+const cloudflareIp = require('cloudflare-ip');
 
 let app = express();
 
@@ -12,6 +14,20 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
+// Cloudflare isolation handler (middleware)
+app.use(function(req, res, next) {
+	// Cloudflare isolation is disabled in the development environment.
+	if (process.env.NODE_ENV !== 'production')
+		return next();
+
+	// The last IP within the header is set by Heroku's load balancer.
+	// First IP is the source client, the second should be Cloudflare.
+	if (req.get('x-forwarded-for')) {
+		const fwd = req.get('x-forwarded-for').split(',');
+		if (fwd.length == 2 && cloudflareIp(fwd[1]))
+			return next();
+	}
+});
 
 app.get('/', function(req, res) {
 	res.send('Hello World!');
