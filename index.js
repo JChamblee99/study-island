@@ -16,8 +16,8 @@ app.use(express.static(__dirname + '/public'));
 
 // Cloudflare isolation handler (middleware)
 app.use(function(req, res, next) {
-	// Cloudflare isolation is disabled in the development environment.
-	if (process.env.NODE_ENV !== 'production')
+	// Cloudflare isolation is disabled for local development and review apps.
+	if (["production", "staging", "development"].indexOf(process.env.NODE_ENV) == -1)
 		return next();
 
 	// The last IP within the header is set by Heroku's load balancer.
