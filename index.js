@@ -27,6 +27,9 @@ app.use(function(req, res, next) {
 		if (fwd.length == 2 && cloudflareIp(fwd[1]))
 			return next();
 	}
+
+	res.status(418);
+	res.end();
 });
 
 app.get('/', function(req, res) {
