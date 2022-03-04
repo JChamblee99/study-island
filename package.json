@@ -5,10 +5,10 @@
   "engines": {
     "node": "17.x"
   },
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "dependencies": {
     "ejs": "^3.1.6",
@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "got": "^11.3.0",
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2",
     "tape": "^4.7.0"
   },
   "repository": {
