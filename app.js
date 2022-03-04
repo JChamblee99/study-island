@@ -1,6 +1,6 @@
 const express = require('express');
 
-let app = express();
+const app = express();
 
 // set up handlebars view engine
 let handlebars = require('express-handlebars')
@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 app.get('/', function(req, res) {
-	res.send('Hello World!');
+	res.json('Hello World!');
 });
 
 // 404 catch-all handler (middleware)
@@ -30,7 +30,4 @@ app.use(function(err, req, res, next){
 	res.send('500 Internal Server Error');
 });
 
-app.listen(app.get('port'), function(){
-  console.log( 'Express started on http://localhost:' +
-    app.get('port') + '; press Ctrl-C to terminate.' );
-});
+module.exports = app;
