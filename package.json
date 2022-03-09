@@ -5,9 +5,9 @@
   "engines": {
     "node": "17.x"
   },
-  "main": "app.js",
+  "main": "./src/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node ./src/server.js",
     "test": "jest"
   },
   "dependencies": {
