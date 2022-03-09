@@ -1,5 +1,5 @@
 const request = require('supertest')
-const app = require('../app.js');
+const app = require('../src/app.js');
 
 describe("Testing home endpoint", () => {
     it("Should return 'Hello World!'", async () => {
