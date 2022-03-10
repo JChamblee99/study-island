@@ -7,13 +7,15 @@
   },
   "main": "./src/server.js",
   "scripts": {
-    "start": "node ./src/server.js",
-    "test": "jest"
+    "start": "node server.js",
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.2",
     "express-handlebars": "^6.0.2",
+    "mongodb-memory-server": "^8.4.0",
+    "mongoose": "^6.2.4",
     "cloudflare-ip": "^0.0.7"
   },
   "devDependencies": {
