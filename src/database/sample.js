@@ -4,7 +4,7 @@ const Reply = require('./models/reply.model');
 const User = require('./models/user.model');
 
 module.exports.build = async () => {
-    const testUserData = {
+    const userData = {
         firstName: 'John',
         lastName: 'Doe',
         username: 'johnDoe',
@@ -14,47 +14,47 @@ module.exports.build = async () => {
         islands: []
     };
 
-    const testUser = new User(testUserData);
+    const user = new User(userData);
 
-    const testNestedReplyData = {
-        author: testUser,
+    const nestedReplyData = {
+        author: user,
         content: 'Content of the nested reply',
         replies: []
     };
 
-    const testNestedReply = new Reply(testNestedReplyData);
+    const nestedReply = new Reply(nestedReplyData);
 
-    const testReplyData = {
-        author: testUser,
+    const replyData = {
+        author: user,
         content: 'Content of the reply',
-        replies: [testNestedReply]
+        replies: [nestedReply]
     };
 
-    const testReply = new Reply(testReplyData);
+    const reply = new Reply(replyData);
 
-    const testThreadData = {
-        author: testUser,
+    const threadData = {
+        author: user,
         title: 'Thread Title',
         content: 'Content of the thread',
-        replies: [testReply]
+        replies: [reply]
     };
 
-    const testThread = new Thread(testThreadData);
+    const thread = new Thread(threadData);
 
-    const testIslandData = {
+    const islandData = {
         name: 'testIsland',
         description: "This is a test island",
         privacy: 'public',
-        users: [testUser],
-        threads: [testThread]
+        users: [user],
+        threads: [thread]
     };
 
-    const testIsland = new Island(testIslandData);
+    const island = new Island(islandData);
 
-    testUser.islands.push(testIsland);
+    user.islands.push(island);
 
-    await testUser.save();
-    await testReply.save();
-    await testThread.save();
-    await testIsland.save();
+    await user.save();
+    await reply.save();
+    await thread.save();
+    await island.save();
 }
