@@ -14,7 +14,7 @@ const status_middleware = require('./middleware/status_code.js');
 
 app.set('port', process.env.PORT || 3000);
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
