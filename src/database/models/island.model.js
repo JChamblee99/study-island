@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const islandSchema = mongoose.Schema({
-    islandName: {
+    name: {
         type: String,
         trim: true,
         unique: true

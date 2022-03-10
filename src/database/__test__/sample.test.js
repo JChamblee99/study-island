@@ -19,8 +19,8 @@ describe('Sample Database Test Suite', () => {
         const islands = await Island.find().populate({ path: 'threads', populate: { path: 'replies' }});
 
         expect(islands).not.toBeNull();
-        expect(islands[0].islandName).toBe('testIsland');
-        expect(islands[0].threads[0].threadTitle).toBe('Thread Title');
+        expect(islands[0].name).toBe('testIsland');
+        expect(islands[0].threads[0].title).toBe('Thread Title');
         expect(islands[0].threads[0].replies[0].content).toBe('Content of the reply');
     });
 

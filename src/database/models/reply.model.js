@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const replySchema = mongoose.Schema({
 
-    replyAuthor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     content: {
         type: String,
         trim: true

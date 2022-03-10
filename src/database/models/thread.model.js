@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const threadSchema = mongoose.Schema({
 
-    threadAuthor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    threadTitle: {
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    title: {
         type: String,
         trim: true
     },

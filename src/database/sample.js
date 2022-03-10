@@ -16,15 +16,15 @@ module.exports.build = async () => {
     const testUser = new User(testUserData);
 
     const testReplyData = {
-        replyAuthor: testUser,
+        author: testUser,
         content: 'Content of the reply',
     };
 
     const testReply = new Reply(testReplyData);
 
     const testThreadData = {
-        threadAuthor: testUser,
-        threadTitle: 'Thread Title',
+        author: testUser,
+        title: 'Thread Title',
         content: 'Content of the thread',
         replies: [testReply]
     };
@@ -32,7 +32,7 @@ module.exports.build = async () => {
     const testThread = new Thread(testThreadData);
 
     const testIslandData = {
-        islandName: 'testIsland',
+        name: 'testIsland',
         description: "This is a test island",
         privacy: 'public',
         users: [testUser],
