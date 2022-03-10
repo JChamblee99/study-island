@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest"
   },
   "dependencies": {
     "ejs": "^3.1.6",
@@ -16,6 +17,7 @@
     "express-handlebars": "^6.0.2",
     "mongodb-memory-server": "^8.4.0",
     "mongoose": "^6.2.4"
+    "cloudflare-ip": "^0.0.7"
   },
   "devDependencies": {
     "got": "^11.3.0",
