@@ -1,44 +1,41 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
-const userSchema = new Schema({
-    local: {
-        firstName: {
-            type: String,
-            trim: true,
-        },
-        lastName: {
-            type: String,
-            trim: true,
-        },
-        username: {
-            type: String,
-            trim: true,
-            unique: true,
-        },
-        email: {
-            type: String,
-            match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
-            unique: true,
-            lowercase: true,
-            trim: true,
-        },
-        password: { type: String },
+const userSchema = mongoose.Schema({
+
+    userId: {
+        type: Number,
+        unique: true
     },
-    google: {
-        id: String,
-        token: String,
-        email: String,
-        name: String,
+    firstName: {
+        type: String,
+        trim: true
     },
-    profilePictureUrl: {
-        type: 'String',
-        default: 'https://via.placeholder.com/150',
+    lastName: {
+        type: String,
+        trim: true
+    },
+    username: {
+        type: String,
+        trim: true,
+        unique: true
+    },
+    email: {
+        type: String,
+        match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
+        unique: true,
+        lowercase: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        trim: true
     },
     role: {
         type: String,
         enum: ['user', 'mod', 'admin'],
-        default: 'user',
-    },
+        default: 'user'
+    }
+
 });
 
-module.exports = model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);
