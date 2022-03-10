@@ -5,7 +5,14 @@ const testIslandData = {
     islandName: 'testIsland',
     description: "This is a test island",
     privacy: 'public',
-    users: ['user1','user2','user3'],
+    users: [{
+        userId: 1,
+        firstName: 'John',
+        lastName: 'Doe',
+        username: 'johnDoe',
+        email: 'john@email.com',
+        password: 'password',
+        role: 'user'}],
     threads:['thread1', 'thread2','tread3'],
 };
 
