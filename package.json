@@ -5,7 +5,7 @@
   "engines": {
     "node": "17.x"
   },
-  "main": "app.js",
+  "main": "./src/server.js",
   "scripts": {
     "start": "node server.js",
     "test": "jest --runInBand --detectOpenHandles"
