@@ -8,7 +8,7 @@ const islandSchema = mongoose.Schema({
     },
     description: String,
     privacy: {
-        type: 'String',
+        type: String,
         enum: ['private', 'public'],
         default: 'public'
     },
