@@ -5,21 +5,18 @@
   "engines": {
     "node": "17.x"
   },
-  "main": "./src/server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./src/server.js",
-    "test": "jest"
+    "start": "node index.js",
+    "test": "node test.js"
   },
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.2",
-    "express-handlebars": "^6.0.2",
-    "cloudflare-ip": "^0.0.7"
+    "express-handlebars": "^6.0.2"
   },
   "devDependencies": {
     "got": "^11.3.0",
-    "jest": "^27.5.1",
-    "supertest": "^6.2.2",
     "tape": "^4.7.0"
   },
   "repository": {
