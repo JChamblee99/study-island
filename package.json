@@ -7,7 +7,7 @@
   },
   "main": "./src/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node ./src/server.js",
     "test": "jest --runInBand --detectOpenHandles"
   },
   "dependencies": {
