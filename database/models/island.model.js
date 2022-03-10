@@ -16,7 +16,7 @@ const islandSchema = mongoose.Schema({
         enum: ['private', 'public'],
         default: 'public'
     },
-    users: [userSchema],
+    users: ['user1','user2','user3'],
     threads: []
 
 });
