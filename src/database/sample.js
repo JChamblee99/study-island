@@ -16,9 +16,18 @@ module.exports.build = async () => {
 
     const testUser = new User(testUserData);
 
+    const testNestedReplyData = {
+        author: testUser,
+        content: 'Content of the nested reply',
+        replies: []
+    };
+
+    const testNestedReply = new Reply(testNestedReplyData);
+
     const testReplyData = {
         author: testUser,
         content: 'Content of the reply',
+        replies: [testNestedReply]
     };
 
     const testReply = new Reply(testReplyData);

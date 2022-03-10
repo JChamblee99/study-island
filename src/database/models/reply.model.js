@@ -6,7 +6,8 @@ const replySchema = mongoose.Schema({
     content: {
         type: String,
         trim: true
-    }
+    },
+    replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }]
 
 });
 

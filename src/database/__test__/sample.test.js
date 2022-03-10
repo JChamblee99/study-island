@@ -22,6 +22,7 @@ describe('Sample Database Test Suite', () => {
         expect(islands[0].name).toBe('testIsland');
         expect(islands[0].threads[0].title).toBe('Thread Title');
         expect(islands[0].threads[0].replies[0].content).toBe('Content of the reply');
+        expect(islands[0].threads[0].replies[0].replies.length).toBe(1);
 
         const users = await User.find().populate('islands');
 
