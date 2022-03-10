@@ -2,14 +2,7 @@ const mongoose = require('mongoose');
 
 const threadSchema = mongoose.Schema({
 
-    threadId: {
-        type: Number,
-        unique: true
-    },
-    threadAuthor: {
-        type: String,
-        trim: true
-    },
+    threadAuthor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     threadTitle: {
         type: String,
         trim: true
@@ -18,7 +11,7 @@ const threadSchema = mongoose.Schema({
         type: String,
         trim: true
     },
-    replies: []
+    replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }]
 });
 
 module.exports = mongoose.model('Thread', threadSchema);

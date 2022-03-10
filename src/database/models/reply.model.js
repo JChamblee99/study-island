@@ -2,14 +2,7 @@ const mongoose = require('mongoose');
 
 const replySchema = mongoose.Schema({
 
-    replyId: {
-        type: Number,
-        unique: true
-    },
-    replyAuthor: {
-        type: String,
-        trim: true
-    },
+    replyAuthor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     content: {
         type: String,
         trim: true
