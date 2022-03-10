@@ -1,23 +1,19 @@
 const mongoose = require('mongoose');
 
 const islandSchema = mongoose.Schema({
-    islandId: {
-        type: Number,
-        unique: true
-    },
-    islandName: {
+    name: {
         type: String,
         trim: true,
         unique: true
     },
     description: String,
     privacy: {
-        type: 'String',
+        type: String,
         enum: ['private', 'public'],
         default: 'public'
     },
-    users: ['user1','user2','user3'],
-    threads: []
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    threads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Thread' }]
 
 });
 

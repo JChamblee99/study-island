@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
 
-    userId: {
-        type: Number,
-        unique: true
-    },
     firstName: {
         type: String,
         trim: true
@@ -34,7 +30,8 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ['user', 'mod', 'admin'],
         default: 'user'
-    }
+    },
+    islands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Island' }]
 
 });
 
