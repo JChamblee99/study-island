@@ -10,6 +10,7 @@ app.set('view engine', 'handlebars');
 
 // middleware
 const cloudflare_middleware = require('./middleware/cloudflare.js');
+const status_middleware = require('./middleware/status_code.js');
 
 app.set('port', process.env.PORT || 3000);
 
@@ -19,20 +20,13 @@ app.use(express.static(__dirname + '/public'));
 app.use(cloudflare_middleware);
 
 app.get('/', (req, res) => {
-	res.json('Hello World!');
+	res.render('home');
 });
 
 // 404 catch-all handler (middleware)
-app.use( (req, res, next) => {
-	res.status(404);
-	res.send('404 Not Found');
-});
+app.use(status_middleware.status_404);
 
 // 500 error handler (middleware)
-app.use( (err, req, res, next) => {
-	console.error(err.stack);
-	res.status(500);
-	res.send('500 Internal Server Error');
-});
+app.use(status_middleware.status_500);
 
 module.exports = app;
