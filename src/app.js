@@ -4,7 +4,7 @@ const app = express();
 
 // set up handlebars view engine
 let handlebars = require('express-handlebars')
-	.create({ defaultLayout: 'main' });
+    .create({ defaultLayout: 'main' });
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(cloudflare_middleware);
 
 app.get('/', (req, res) => {
-	res.render('home');
+    res.render('home');
 });
 
 // 404 catch-all handler (middleware)
