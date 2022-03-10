@@ -10,7 +10,7 @@ app.set('view engine', 'handlebars');
 
 // middleware
 const cloudflare_middleware = require('./middleware/cloudflare.js');
-const status_middleware = require('./middleware/status_code.js');
+const status_middleware = require('./middleware/status-code.js');
 
 app.set('port', process.env.PORT || 3000);
 
