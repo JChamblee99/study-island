@@ -22,6 +22,12 @@ describe('Sample Database Test Suite', () => {
         expect(islands[0].name).toBe('testIsland');
         expect(islands[0].threads[0].title).toBe('Thread Title');
         expect(islands[0].threads[0].replies[0].content).toBe('Content of the reply');
+
+        const users = await User.find().populate('islands');
+
+        expect(users).not.toBeNull();
+        expect(users[0].username).toBe('johnDoe');
+        expect(users[0].islands[0].name).toBe('testIsland');
     });
 
 });

@@ -30,7 +30,8 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ['user', 'mod', 'admin'],
         default: 'user'
-    }
+    },
+    islands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Island' }]
 
 });
 

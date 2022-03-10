@@ -10,7 +10,8 @@ module.exports.build = async () => {
         username: 'johnDoe',
         email: 'john@email.com',
         password: 'password',
-        role: 'user'
+        role: 'user',
+        islands: []
     };
 
     const testUser = new User(testUserData);
@@ -40,6 +41,8 @@ module.exports.build = async () => {
     };
 
     const testIsland = new Island(testIslandData);
+
+    testUser.islands.push(testIsland);
 
     await testUser.save();
     await testReply.save();
