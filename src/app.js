@@ -1,5 +1,7 @@
 // npm packages
 const express = require('express');
+
+const index = require('./routes/home');
 const app = express();
 
 // set up handlebars view engine
@@ -15,6 +17,9 @@ const status_middleware = require('./middleware/status-code.js');
 app.set('port', process.env.PORT || 3000);
 
 app.use(express.static('public'));
+
+//routes
+app.use('/', index);
 
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
