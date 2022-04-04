@@ -1,43 +1,43 @@
 const express = require('express');
 const router = express.Router();
 
-const Islands = require('../controllers/islands');
+const islandController = require('../controllers/islands');
 
 /* Island Routes */
 //Get all islands
-router.get('/islands', Island.getAllIslands);
+router.get('/', islandController.getAllIslands);
 
 //Get individual island
-router.get('/islands/:id', Island.getSingleIsland);
+router.get('/one/:id', islandController.getSingleIsland);
 
-//Create new island
-router.post('/islands', Island.addIsland);
+// //Create new island
+// router.post('/islands', islandController.addIsland);
 
-//Update island info
-router.put('/islands/:id', Island.editIsland);
+// //Update island info
+// router.put('/islands/:id', islandController.editIsland);
 
-//Delete Island
-router.delete('/islands/:id', Island.deleteIslandById);
+// //Delete Island
+// router.delete('/islands/:id', islandController.deleteIslandById);
 
-//Add user to an island
-router.post('/islands/:id/users', Island.addUserById);
+// //Add user to an island
+// router.post('/islands/:id/users', islandController.addUserById);
 
-//Edit user
-router.put('/islands/:id/users/:id', Island.editUserById);
+// //Edit user
+// router.put('/islands/:id/users/:id', islandController.editUserById);
 
-//Remove user from an island
-router.delete('/islands/:id/users/:id', Island.deleteUserById);
+// //Remove user from an island
+// router.delete('/islands/:id/users/:id', islandController.deleteUserById);
 
-//Get all threads
-router.get('/islands/:id/threads', Island.getAllThreads)
+// //Get all threads
+// router.get('/islands/:id/threads', islandController.getAllThreads)
 
-//Get individual thread
-router.get('/islands/:id/threads/:id', Island.getSingleThread)
+// //Get individual thread
+// router.get('/islands/:id/threads/:id', islandController.getSingleThread)
 
-//Add thread to island
-router.post('/islands/:id/threads', Island.addThread);
+// //Add thread to island
+// router.post('/islands/:id/threads', islandController.addThread);
 
-//Edit thread on island
-router.put('/islands/:id/threads/:id', Island.editThread);
+// //Edit thread on island
+// router.put('/islands/:id/threads/:id', islandController.editThread);
 
 module.exports = router;

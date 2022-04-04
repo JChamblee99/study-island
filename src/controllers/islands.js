@@ -1,50 +1,81 @@
 const mongoose = require('mongoose');
 
-const Island = require("../database/models/island.model");
+require('../database/models/island.model');
+require('../database/models/thread.model');
+require('../database/models/reply.model');
+require('../database/models/user.model');
 
 
+
+const Island = mongoose.model("Island");
+
+const { dbConnect, dbDisconnect } = require('../../utils/test-utils/dbHandler.utils');
 
 module.exports = {
 
-    getAllIslands: async function(req, res) {
-        Island.find()
-        .then(function (allIslands) {
-            res.json = ({
+    //Testing data
+    loadSampleIslands: async function () {
+
+        dbConnect();
+
+        let island = new Island({
+            name: 'testIsland',
+            description: "This is a test island",
+            privacy: 'public',
+            users: [],
+            threads: []
+        });
+
+        let island2 = new Island({
+            name: 'secondIsland',
+            description: "This is a test island",
+            privacy: 'public',
+            users: [],
+            threads: []
+        });
+
+        await island.save();
+        await island2.save();
+
+    },
+
+    getAllIslands: async function (req, res) {
+        Island.find().then(function (allIslands) {
+            res.json({
                 status: "success",
-                data: {
-                    island: allIslands,
-                },
+                data: { island: allIslands },
             });
+
         });
     },
 
     getSingleIsland: async function (req, res) {
-        if(req.params.id) {
-            Island.find({_id: req.params.id}).then(function(res) {
-                if(res && res.length > 0) {
-                    res.json({
-                        status: "success",
-                        data: {
-                            island: res[0],
-                        },
-                    });
-                }else {
-                    res.json({
-                        status: "fail",
-                        data: {id: "The specified id was not found"},
-                    });
-                }
-            });
-        }else {
+        if (req.params.id) {
+            Island.findById({ _id: req.params.id }).then(function(results) {
+                    if (results && results.length > 0) {
+                        res.json({
+                            status: "success",
+                            data: {
+                                island: results[0],
+                            },
+                        });
+                    } else {
+                        res.json({
+                            status: "fail",
+                            data: { id: "The specified id was not found" },
+                        });
+                    }
+                });
+        } else {
             res.json({
                 status: "fail",
-                data: {id: "An id is required but was not passed in. "},
+                data: { id: "An id is required but was not passed in. " },
             });
         }
     },
 
     addIsland: async function (req, res) {
-        if(
+        if (
             req.body &&
             req.body.name &&
             req.body.description &&
@@ -57,13 +88,13 @@ module.exports = {
                     statys: "sucess",
                     data: {},
                 });
-            } catch(err) {
+            } catch (err) {
                 res.json({
                     status: "error",
                     data: err.message,
                 });
             }
-        }else {
+        } else {
             res.json({
                 status: "fail",
                 data: "All fields were not provided. Can not create Island",
@@ -72,15 +103,15 @@ module.exports = {
     },
 
     editIsland: async function (req, res) {
-        if(req.params.id && req.body) {
+        if (req.params.id && req.body) {
             try {
-                await Island.findByIdAndUpdate({_id: req.params.id}, req.body).lean();
+                await Island.findByIdAndUpdate({ _id: req.params.id }, req.body).lean();
                 res.status(201);
                 res.json({
                     status: "success",
                     data: {},
                 });
-            } catch(err) {
+            } catch (err) {
                 res.json({
                     status: "error",
                     data: err.message,
@@ -95,8 +126,8 @@ module.exports = {
     },
 
     deleteIslandById: async function (req, res) {
-        if(req.params.id) {
-            await Island.findByIdAndDelete({_id: req.params.id}).lean();
+        if (req.params.id) {
+            await Island.findByIdAndDelete({ _id: req.params.id }).lean();
 
             res.json({
                 status: "success",
@@ -106,7 +137,7 @@ module.exports = {
             //Send back and error
             res.json({
                 status: "fail",
-                data: {id: "An id is required but was not passed in" },
+                data: { id: "An id is required but was not passed in" },
             });
         }
     },

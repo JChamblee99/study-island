@@ -1,7 +1,8 @@
 // npm packages
 const express = require('express');
 
-const index = require('./routes/home');
+const indexRouter = require('./routes/index');
+const islandRouter = require('./routes/islands')
 const app = express();
 
 // set up handlebars view engine
@@ -19,14 +20,15 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'));
 
 //routes
-app.use('/', index);
+app.use('/', indexRouter);
+app.use('/islands', islandRouter);
+
+//Loads Testing data -- remove before pushing
+let islandController = require('./controllers/islands');
+islandController.loadSampleIslands();
 
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
-
-app.get('/', (req, res) => {
-	res.render('home');
-});
 
 // 404 catch-all handler (middleware)
 app.use(status_middleware.status_404);
