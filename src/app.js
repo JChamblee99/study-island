@@ -10,7 +10,7 @@ const cookie = require('cookie-parser');
 const cloudflare_middleware = require('./middleware/cloudflare.js');
 const status_middleware = require('./middleware/status-code.js');
 
-const COOKIE_SECRET = 'keyboardcat';
+const COOKIE_SECRET = '0ah13oj9dxb030lp7n00'; // Fix before merge to Dev
 
 // main config
 app.use(express.static('public'));
@@ -20,7 +20,7 @@ app.use(session({
 	secret: COOKIE_SECRET,
 	resave: false,
 	saveUninitialized: false,
-	cookie: {secure: false}
+	cookie: { secure: false }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -47,14 +47,10 @@ let db = require('./database/db');
 app.set('port', process.env.PORT || 3000);
 
 app.get('/register', (req, res) => {
-	// res.sendFile(path.resolve(__dirname, '../public/www/register.html'));
 	res.render('register');
 });
 
 app.post('/register', (req, res) => {
-
-	console.log(req.body.username);
-	console.log(req.body.password);
 
 	User.register(new User({
 		username: req.body.username,
@@ -63,14 +59,13 @@ app.post('/register', (req, res) => {
 		lastName: req.body.lastName
 	}), req.body.password, function (err, user) {
 		if (err) {
-			return res.render('error', "Registration error")
+			return res.render('error', { error: "Registration error" })
 		}
 
 		passport.authenticate('local')(req, res, function () {
 			res.render('home')
 		})
 	})
-
 });
 
 app.get('/login', (req, res) => {

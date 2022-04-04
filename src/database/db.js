@@ -8,7 +8,6 @@ class Database {
         this._connect();
     }
 
-
     _connect() {
         mongoose.connect(`mongodb://${server}/${database}`)
             .then(() => {
