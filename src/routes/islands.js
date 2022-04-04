@@ -8,7 +8,7 @@ const islandController = require('../controllers/islands');
 router.get('/', islandController.getAllIslands);
 
 //Get individual island
-router.get('/one/:id', islandController.getSingleIsland);
+router.get('/:id', islandController.getSingleIsland);
 
 // //Create new island
 // router.post('/islands', islandController.addIsland);
