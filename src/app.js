@@ -6,11 +6,14 @@ const path = require('path');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 
+// controllers
+const auth = require('./controllers/auth.controller');
+
 // middleware
 const cloudflare_middleware = require('./middleware/cloudflare.js');
 const status_middleware = require('./middleware/status-code.js');
 
-const COOKIE_SECRET = '0ah13oj9dxb030lp7n00'; // Fix before merge to Dev
+const COOKIE_SECRET = process.env.COOKIE_SECRET;
 
 // main config
 app.use(express.static('public'));
@@ -35,47 +38,22 @@ let handlebars = require('express-handlebars')
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-// Passport Config
-const User = require('./database/models/user.model');
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 // DB Connection
 let db = require('./database/db');
 
 app.set('port', process.env.PORT || 3000);
 
-app.get('/register', (req, res) => {
-	res.render('register');
-});
+// shows registration page to user
+app.get('/register', auth.showRegistration);
 
-app.post('/register', (req, res) => {
+// receives registration data, processes it, and handles auth
+app.post('/register', auth.registerNewUser);
 
-	User.register(new User({
-		username: req.body.username,
-		email: req.body.email,
-		firstName: req.body.firstName,
-		lastName: req.body.lastName
-	}), req.body.password, function (err, user) {
-		if (err) {
-			return res.render('error', { error: "Registration error" })
-		}
+// shows login page to user
+app.get('/login', auth.showLogin);
 
-		passport.authenticate('local')(req, res, function () {
-			res.render('home')
-		})
-	})
-});
-
-app.get('/login', (req, res) => {
-	res.render('login');
-});
-
-app.post('/login', passport.authenticate('local', {
-	successRedirect: '/',
-	failureRedirect: '/login'
-}));
+// receives registration login data and handles auth
+app.post('/login', auth.loginUser);
 
 app.get('/', (req, res) => {
 	res.render('home');
