@@ -2,7 +2,7 @@ const cloudflareIp = require('cloudflare-ip');
 
 module.exports = (req, res, next) => {
     // Cloudflare isolation is disabled for local development and review apps.
-    if (["production"].indexOf(process.env.NODE_ENV) == -1) {
+    if (["production", "staging", "development"].indexOf(process.env.NODE_ENV) == -1) {
         return next();
     }
 

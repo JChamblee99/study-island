@@ -3,7 +3,7 @@ var credentials = require('./credentials');
 
 // Choose which URL to use for this connection
 let dbURI = credentials.mongo.development.connectionString;
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   dbURI = credentials.mongo.production.connectionString;
 }
 
