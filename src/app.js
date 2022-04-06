@@ -13,7 +13,11 @@ const auth = require('./controllers/auth.controller');
 const cloudflare_middleware = require('./middleware/cloudflare.js');
 const status_middleware = require('./middleware/status-code.js');
 
-const COOKIE_SECRET = process.env.COOKIE_SECRET;
+let COOKIE_SECRET = '7yhhs3n7cplj2b3k79o7'; // random dev string
+
+if(process.env.COOKIE_SECRET) {
+	COOKIE_SECRET = process.env.COOKIE_SECRET; // actual secret
+}
 
 // main config
 app.use(express.static('public'));
