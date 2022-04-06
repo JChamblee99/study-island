@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "A platform to organize study groups",
   "engines": {
-    "node": "17.x"
+    "node": "^16.14.0",
+    "npm": "^8.3.1"
   },
   "main": "./src/server.js",
   "scripts": {
