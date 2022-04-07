@@ -43,15 +43,16 @@ module.exports = {
         Island.find().then(function (allIslands) {
             res.json({
                 status: "success",
-                data: { island: allIslands },
+                data: { islands: allIslands },
             });
 
         });
     },
 
     getSingleIsland: async function (req, res) {
-        if (req.params.id) {
-            Island.findById({ _id: req.params.id }).then(function(results) {
+        var id = req.params.id;
+        if (id) {
+            Island.find({ _id: id }).then(function(results) {
                     if (results && results.length > 0) {
                         res.json({
                             status: "success",
@@ -74,42 +75,32 @@ module.exports = {
         }
     },
 
-    addIsland: async function (req, res) {
-        if (
-            req.body &&
-            req.body.name &&
-            req.body.description &&
-            req.body.privacy
-        ) {
-            try {
-                await Island.create(req.body);
-                res.status(201);
-                res.json({
-                    statys: "sucess",
-                    data: {},
-                });
-            } catch (err) {
-                res.json({
-                    status: "error",
-                    data: err.message,
-                });
-            }
-        } else {
+    addIsland: function (req, res) {
+        var newIsland = req.body;
+        try {
+            Island.create(req.body);
+            res.status(201);
             res.json({
-                status: "fail",
-                data: "All fields were not provided. Can not create Island",
+                status: "sucess",
+                data: { newIsland },
+            });
+        } catch (err) {
+            res.json({
+                status: "error",
+                data: err.message,
             });
         }
     },
 
     editIsland: async function (req, res) {
         if (req.params.id && req.body) {
+            var updatedIsland = req.body;
             try {
                 await Island.findByIdAndUpdate({ _id: req.params.id }, req.body).lean();
                 res.status(201);
                 res.json({
                     status: "success",
-                    data: {},
+                    data: { updatedIsland },
                 });
             } catch (err) {
                 res.json({
@@ -128,10 +119,9 @@ module.exports = {
     deleteIslandById: async function (req, res) {
         if (req.params.id) {
             await Island.findByIdAndDelete({ _id: req.params.id }).lean();
-
             res.json({
                 status: "success",
-                data: {},
+                data: {island: island},
             });
         } else {
             //Send back and error

@@ -11,13 +11,13 @@ router.get('/', islandController.getAllIslands);
 router.get('/:id', islandController.getSingleIsland);
 
 // //Create new island
-// router.post('/islands', islandController.addIsland);
+router.post('/', islandController.addIsland);
 
 // //Update island info
-// router.put('/islands/:id', islandController.editIsland);
+router.put('/:id', islandController.editIsland);
 
 // //Delete Island
-// router.delete('/islands/:id', islandController.deleteIslandById);
+router.delete('/islands/:id', islandController.deleteIslandById);
 
 // //Add user to an island
 // router.post('/islands/:id/users', islandController.addUserById);
