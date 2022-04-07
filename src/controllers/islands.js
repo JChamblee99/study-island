@@ -121,7 +121,7 @@ module.exports = {
             await Island.findByIdAndDelete({ _id: req.params.id }).lean();
             res.json({
                 status: "success",
-                data: {island: island},
+                data: {},
             });
         } else {
             //Send back and error

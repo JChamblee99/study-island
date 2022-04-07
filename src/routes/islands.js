@@ -17,27 +17,27 @@ router.post('/', islandController.addIsland);
 router.put('/:id', islandController.editIsland);
 
 // //Delete Island
-router.delete('/islands/:id', islandController.deleteIslandById);
+router.delete('/:id', islandController.deleteIslandById);
 
 // //Add user to an island
-// router.post('/islands/:id/users', islandController.addUserById);
+// router.post('/:id/users', islandController.addUserById);
 
 // //Edit user
-// router.put('/islands/:id/users/:id', islandController.editUserById);
+// router.put('/:id/users/:id', islandController.editUserById);
 
 // //Remove user from an island
-// router.delete('/islands/:id/users/:id', islandController.deleteUserById);
+// router.delete('/:id/users/:id', islandController.deleteUserById);
 
 // //Get all threads
-// router.get('/islands/:id/threads', islandController.getAllThreads)
+// router.get('/:id/threads', islandController.getAllThreads)
 
 // //Get individual thread
-// router.get('/islands/:id/threads/:id', islandController.getSingleThread)
+// router.get('/:id/threads/:id', islandController.getSingleThread)
 
 // //Add thread to island
-// router.post('/islands/:id/threads', islandController.addThread);
+// router.post('/:id/threads', islandController.addThread);
 
 // //Edit thread on island
-// router.put('/islands/:id/threads/:id', islandController.editThread);
+// router.put('/:id/threads/:id', islandController.editThread);
 
 module.exports = router;
