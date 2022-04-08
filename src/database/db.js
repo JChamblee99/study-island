@@ -2,15 +2,20 @@ const mongoose = require('mongoose');
 var credentials = require('./credentials');
 
 // Choose which URL to use for this connection
-let dbURI = credentials.mongo.development.connectionString;
+// let dbURI = credentials.mongo.development.connectionString;
+let dbURI = "";
 if (process.env.MONGODB_URI) {
   dbURI = credentials.mongo.production.connectionString;
+
+  // Mongoose connection options
+  let options = { useUnifiedTopology: true, useNewUrlParser: true };
+
+  mongoose.connect(dbURI, options);
+
+} else {
+  const { dbConnect, dbDisconnect } = require('../../utils/test-utils/dbHandler.utils');
+  dbConnect();
 }
-
-// Mongoose connection options
-let options = { useUnifiedTopology: true, useNewUrlParser: true };
-
-mongoose.connect(dbURI, options);
 
 mongoose.connection.on('connected', () => {
   console.log(`Mongoose connected to ${dbURI}`);
@@ -23,7 +28,7 @@ mongoose.connection.on('disconnected', () => {
 });
 
 const gracefulShutdown = (msg, callback) => {
-  mongoose.connection.close( () => {
+  mongoose.connection.close(() => {
     console.log(`Mongoose disconnected through ${msg}`);
     callback();
   });
