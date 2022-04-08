@@ -3,6 +3,7 @@ const express = require('express');
 
 const indexRouter = require('./routes/index');
 const islandRouter = require('./routes/islands')
+const userRouter = require('./routes/users');
 const app = express();
 
 // set up handlebars view engine
@@ -33,10 +34,11 @@ app.use(express.static('public'));
 //routes
 app.use('/', indexRouter);
 app.use('/islands', islandRouter);
+app.use('/users', userRouter);
 
-//Loads Testing data -- remove before pushing
-let islandController = require('./controllers/islands');
-islandController.loadSampleIslands();
+//connect to in-memory db
+const { dbConnect, dbDisconnect } = require('../utils/test-utils/dbHandler.utils');
+dbConnect();
 
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);

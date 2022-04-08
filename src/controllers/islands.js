@@ -8,36 +8,13 @@ require('../database/models/user.model');
 
 
 const Island = mongoose.model("Island");
+const User = mongoose.model("User");
+const Thread = mongoose.model("Thread");
+const Reply = mongoose.model("Reply");
 
 const { dbConnect, dbDisconnect } = require('../../utils/test-utils/dbHandler.utils');
 
 module.exports = {
-
-    //Testing data
-    loadSampleIslands: async function () {
-
-        dbConnect();
-
-        let island = new Island({
-            name: 'testIsland',
-            description: "This is a test island",
-            privacy: 'public',
-            users: [],
-            threads: []
-        });
-
-        let island2 = new Island({
-            name: 'secondIsland',
-            description: "This is a test island",
-            privacy: 'public',
-            users: [],
-            threads: []
-        });
-
-        await island.save();
-        await island2.save();
-
-    },
 
     getAllIslands: async function (req, res) {
         Island.find().then(function (allIslands) {
@@ -124,7 +101,6 @@ module.exports = {
                 data: {},
             });
         } else {
-            //Send back and error
             res.json({
                 status: "fail",
                 data: { id: "An id is required but was not passed in" },
@@ -133,7 +109,20 @@ module.exports = {
     },
 
     addUserById: async function (req, res) {
-        console.log("Fix to add user to island");
+        if(req.params.islandId && req.params.userId) {
+            const island = Island.find({_id: req.params.islandId});
+            const user = User.find({_id: req.params.userId});
+
+            console.log(island);
+            console.log(user);
+
+            // island.users.push(user);
+
+            res.json({
+                status: "success",
+                data: {user}
+            });
+        }
     },
 
     deleteUserById: async function (req, res) {

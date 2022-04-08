@@ -20,7 +20,7 @@ router.put('/:id', islandController.editIsland);
 router.delete('/:id', islandController.deleteIslandById);
 
 // //Add user to an island
-// router.post('/:id/users', islandController.addUserById);
+router.put('/:islandId/users/:userId', islandController.addUserById);
 
 // //Edit user
 // router.put('/:id/users/:id', islandController.editUserById);
