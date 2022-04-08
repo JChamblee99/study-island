@@ -110,18 +110,18 @@ module.exports = {
 
     addUserById: async function (req, res) {
         if(req.params.islandId && req.params.userId) {
-            const island = Island.find({_id: req.params.islandId});
-            const user = User.find({_id: req.params.userId});
-
-            console.log(island);
-            console.log(user);
-
-            // island.users.push(user);
-
-            res.json({
-                status: "success",
-                data: {user}
-            });
+            Island.findByIdAndUpdate(req.params.islandId, {users: req.params.userId},
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.json({
+                            status: "success",
+                            data: {user: "User added"}
+                        });
+                    }
+                });
         }
     },
 
