@@ -22,13 +22,27 @@ if(process.env.COOKIE_SECRET) {
 // main config
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(cookie(COOKIE_SECRET))
-app.use(session({
-	secret: COOKIE_SECRET,
-	resave: false,
-	saveUninitialized: false,
-	cookie: { secure: true }
-}));
+app.use(cookie(COOKIE_SECRET));
+
+// {secure: true} breaks sessions in non-https environments
+// This insures that cookies are secure in Production where it matters
+if(process.env.NODE_ENV === 'production')
+{
+	app.use(session({
+		secret: COOKIE_SECRET,
+		resave: false,
+		saveUninitialized: false,
+		cookie: { secure: true }
+	}));
+} else {
+	app.use(session({
+		secret: COOKIE_SECRET,
+		resave: false,
+		saveUninitialized: false,
+		cookie: { secure: false }
+	}));
+}
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
