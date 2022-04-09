@@ -26,7 +26,7 @@ app.use(cookie(COOKIE_SECRET));
 
 // {secure: true} breaks sessions in non-https environments
 // This insures that cookies are secure in Production where it matters
-if(process.env.NODE_ENV === 'production')
+if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging' )
 {
 	app.use(session({
 		secret: COOKIE_SECRET,
@@ -72,6 +72,9 @@ app.get('/login', auth.showLogin);
 
 // receives registration login data and handles auth
 app.post('/login', auth.loginUser);
+
+// logs out a user
+app.post('/logout', auth.logoutUser);
 
 app.get('/', (req, res) => {
 	res.render('home');

@@ -33,12 +33,17 @@ const auth = {
 
 	showLogin: (req, res) => {
 		res.render('login');
-	}, 
+	},
 
 	loginUser: passport.authenticate('local', {
 		successRedirect: '/',
 		failureRedirect: '/login'
 	}),
+
+	logoutUser: (req, res) => {
+		req.logout();
+		res.redirect('/');
+	},
 }
 
 module.exports = auth;
