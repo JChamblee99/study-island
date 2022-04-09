@@ -13,6 +13,7 @@ const islandSchema = mongoose.Schema({
         default: 'public'
     },
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    mods: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     threads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Thread' }]
 
 });
