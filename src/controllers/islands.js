@@ -29,21 +29,21 @@ module.exports = {
     getSingleIsland: async function (req, res) {
         var id = req.params.id;
         if (id) {
-            Island.find({ _id: id }).then(function(results) {
-                    if (results && results.length > 0) {
-                        res.json({
-                            status: "success",
-                            data: {
-                                island: results[0],
-                            },
-                        });
-                    } else {
-                        res.json({
-                            status: "fail",
-                            data: { id: "The specified id was not found" },
-                        });
-                    }
-                });
+            Island.find({ _id: id }).then(function (results) {
+                if (results && results.length > 0) {
+                    res.json({
+                        status: "success",
+                        data: {
+                            island: results[0],
+                        },
+                    });
+                } else {
+                    res.json({
+                        status: "fail",
+                        data: { id: "The specified id was not found" },
+                    });
+                }
+            });
         } else {
             res.json({
                 status: "fail",
@@ -109,8 +109,8 @@ module.exports = {
     },
 
     addUserById: async function (req, res) {
-        if(req.params.islandId && req.params.userId) {
-            Island.findByIdAndUpdate(req.params.islandId, {users: req.params.userId},
+        if (req.params.islandId && req.params.userId) {
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.params.userId } },
                 function (err, data) {
                     if (err) {
                         console.log(err);
@@ -118,7 +118,7 @@ module.exports = {
                     else {
                         res.json({
                             status: "success",
-                            data: {user: "User added"}
+                            data: { user: "User added" }
                         });
                     }
                 });
@@ -126,16 +126,73 @@ module.exports = {
     },
 
     deleteUserById: async function (req, res) {
-        console.log("Fix to delete user by id");
+        if (req.params.islandId && req.params.userId) {
+            Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.params.userId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.json({
+                            status: "success",
+                            data: { user: "User removed" }
+                        });
+                    }
+                });
+        }
+    },
+
+    getAllThreads: async function (req, res) {
+        Island.find(req.params.islandId).select({"threads": 1}).then(function (results) {
+            if (results && results.length > 0) {
+                res.json({
+                    status: "success",
+                    data: {
+                        threads: results,
+                    },
+                });
+            } else {
+                res.json({
+                    status: "fail",
+                    data: { id: "The specified id was not found" },
+                });
+            }
+        })
     },
 
     addThread: async function (req, res) {
-        console.log("Fix to add thread to island");
+        if (req.params.islandId && req.params.userId) {
+            Island.find(req.params.islandId).$push({ users: req.params.userId });
+            Island.findByIdAndUpdate(req.params.islandId, { users: req.params.userId },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.json({
+                            status: "success",
+                            data: { user: "User added" }
+                        });
+                    }
+                });
+        }
     },
 
-    editThread: async function (req, res) {
-        console.log("Fix to edit thread on island");
-    }
-
+    deleteThreadById: async function (req, res) {
+        if (req.params.islandId && req.params.threadId) {
+            Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.params.userId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.json({
+                            status: "success",
+                            data: { user: "User removed" }
+                        });
+                    }
+                });
+        }
+    },
 
 }

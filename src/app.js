@@ -18,14 +18,11 @@ const status_middleware = require('./middleware/status-code.js');
 
 // Parse json body submissions
 const bodyParser = require('body-parser');
-
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
 app.use(bodyParser.json())
-
-const { get } = require('mongoose');
 
 app.set('port', process.env.PORT || 3000);
 

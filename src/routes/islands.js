@@ -8,36 +8,33 @@ const islandController = require('../controllers/islands');
 router.get('/', islandController.getAllIslands);
 
 //Get individual island
-router.get('/:id', islandController.getSingleIsland);
+router.get('/:islandId', islandController.getSingleIsland);
 
-// //Create new island
+//Create new island
 router.post('/', islandController.addIsland);
 
-// //Update island info
-router.put('/:id', islandController.editIsland);
+//Update island info
+router.put('/update-island/:islandId', islandController.editIsland);
 
-// //Delete Island
-router.delete('/:id', islandController.deleteIslandById);
+//Delete Island
+router.delete('/remove-island/:islandId', islandController.deleteIslandById);
 
-// //Add user to an island
-router.put('/:islandId/users/:userId', islandController.addUserById);
+//Add user to an island
+router.put('/:islandId/add-user/:userId', islandController.addUserById);
 
-// //Edit user
-// router.put('/:id/users/:id', islandController.editUserById);
+//Remove user from an island
+router.put('/:islandId/remove-user/:userId', islandController.deleteUserById);
 
-// //Remove user from an island
-// router.delete('/:id/users/:id', islandController.deleteUserById);
+//Get all threads
+router.get('/:islandId/threads', islandController.getAllThreads)
 
-// //Get all threads
-// router.get('/:id/threads', islandController.getAllThreads)
-
-// //Get individual thread
+// //Get single thread
 // router.get('/:id/threads/:id', islandController.getSingleThread)
 
-// //Add thread to island
+// //Create thread
 // router.post('/:id/threads', islandController.addThread);
 
-// //Edit thread on island
+// //Edit thread
 // router.put('/:id/threads/:id', islandController.editThread);
 
 module.exports = router;
