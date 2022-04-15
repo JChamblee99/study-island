@@ -10,8 +10,11 @@ router.get('/', islandController.getAllIslands);
 //Get individual island
 router.get('/:islandId', islandController.getSingleIsland);
 
+//Get request for create island page
+router.get('/add-island', islandController.addIslandForm); //fix to request add-island form page
+
 //Create new island
-router.post('/', islandController.addIsland);
+router.post('/add-island', islandController.addIsland);
 
 //Update island info
 router.put('/update-island/:islandId', islandController.editIsland);

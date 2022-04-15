@@ -33,10 +33,6 @@ app.use('/', indexRouter);
 app.use('/islands', islandRouter);
 app.use('/users', userRouter);
 
-//connect to in-memory db
-const { dbConnect, dbDisconnect } = require('../utils/test-utils/dbHandler.utils');
-dbConnect();
-
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
 

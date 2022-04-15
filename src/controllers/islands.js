@@ -12,48 +12,34 @@ const User = mongoose.model("User");
 const Thread = mongoose.model("Thread");
 const Reply = mongoose.model("Reply");
 
-const { dbConnect, dbDisconnect } = require('../../utils/test-utils/dbHandler.utils');
-
 module.exports = {
 
     getAllIslands: async function (req, res) {
-        Island.find().then(function (allIslands) {
-            res.json({
-                status: "success",
-                data: { islands: allIslands },
-            });
-
-        });
+        const islands = await Island.find().lean();
+        res.render('islandList', { islands });
+        console.log({ islands });
     },
 
     getSingleIsland: async function (req, res) {
-        var id = req.params.id;
-        if (id) {
-            Island.find({ _id: id }).then(function (results) {
-                if (results && results.length > 0) {
-                    res.json({
-                        status: "success",
-                        data: {
-                            island: results[0],
-                        },
-                    });
-                } else {
-                    res.json({
-                        status: "fail",
-                        data: { id: "The specified id was not found" },
-                    });
-                }
-            });
-        } else {
+        const island = await Island.findById({ _id: req.params.islandId }).lean();
+        if (island) {
+            res.render('island', { island });
+            console.log({ island });
+        }
+        else {
             res.json({
-                status: "fail",
-                data: { id: "An id is required but was not passed in. " },
+                status: "error",
+                data: "No Island with that id was found"
             });
         }
     },
 
+    addIslandForm: function (req, res) {
+        res.render('/add-island');
+    },
+
     addIsland: function (req, res) {
-        var newIsland = req.body;
+        const newIsland = req.body;
         try {
             Island.create(req.body);
             res.status(201);
@@ -143,28 +129,18 @@ module.exports = {
     },
 
     getAllThreads: async function (req, res) {
-        Island.find(req.params.islandId).select({"threads": 1}).then(function (results) {
-            if (results && results.length > 0) {
-                res.json({
-                    status: "success",
-                    data: {
-                        threads: results,
-                    },
-                });
-            } else {
-                res.json({
-                    status: "fail",
-                    data: { id: "The specified id was not found" },
-                });
-            }
-        })
+        const island = Island.find(req.params.islandId).lean();
+        const threads = island.threads;
+        res.json({
+            data2: threads,
+        });
+        console.log("FIX ME -- UNABLE TO RETURN THREADS");
     },
 
     addThread: async function (req, res) {
         if (req.params.islandId && req.params.userId) {
-            Island.find(req.params.islandId).$push({ users: req.params.userId });
-            Island.findByIdAndUpdate(req.params.islandId, { users: req.params.userId },
-                function (err, data) {
+            Island.find(req.params.islandId).$push({ users: req.params.userId },
+                function (err) {
                     if (err) {
                         console.log(err);
                     }
