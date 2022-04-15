@@ -1,0 +1,22 @@
+<div class="header">
+    <button class="button">Settings</button><br><br>
+
+    <form>
+        <input type="text" name="search" placeholder="Search.."> <br><br>
+        <textarea id="islandbanner" name="islandbanner" placeholder="Island Name + Description Banner..."></textarea>
+    </form>
+</div>
+
+<div class="row">
+  <div class="column side">
+    <h2>Tabs</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+  </div>
+  
+  <div class="column middle">
+    <h2>Threads</h2>
+    {{#each island.threads}}
+        <li class="list-gr">title: {{title}} </li>
+    {{/each}}
+  </div>
+</div>

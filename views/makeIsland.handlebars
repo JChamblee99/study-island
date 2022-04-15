@@ -1,0 +1,19 @@
+<div id="MainPage">
+  <form onsubmit="/SubmitIsland">
+    <label for="islandname">Island Name</label>
+    <input type="text" id="islandname" name="islandname" required>
+    <label for="islandsubject">Island Subject</label>
+    <input type="text" id="islandsubject" name="islandsubject" required>
+    <label for="privacy">Privacy Setting</label>
+    <select id="privacy" name="privacy">
+      <option value="public">Public</option>
+      <option value="private">Private</option>
+    </select>
+    <label for="islanddescription">Island description</label>
+    <textarea id="islanddescription" name="islanddescription" placeholder="Write Island description..." required></textarea>
+    <br><br>
+    <div class="row">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</div>

@@ -16,7 +16,7 @@ module.exports = {
 
     getAllIslands: async function (req, res) {
         const islands = await Island.find().lean();
-        res.render('islandList', { islands });
+        res.render('allIslands', { islands });
         console.log({ islands });
     },
 
@@ -35,7 +35,7 @@ module.exports = {
     },
 
     addIslandForm: function (req, res) {
-        res.render('/add-island');
+        res.render('makeIsland');
     },
 
     addIsland: function (req, res) {
@@ -129,17 +129,17 @@ module.exports = {
     },
 
     getAllThreads: async function (req, res) {
-        const island = Island.find(req.params.islandId).lean();
+        const island = Island.findById(req.params.islandId).populate('threads');
         const threads = island.threads;
         res.json({
             data2: threads,
         });
-        console.log("FIX ME -- UNABLE TO RETURN THREADS");
+        console.log(threads);
     },
 
     addThread: async function (req, res) {
         if (req.params.islandId && req.params.userId) {
-            Island.find(req.params.islandId).$push({ users: req.params.userId },
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { threads: req.params.threadId } },
                 function (err) {
                     if (err) {
                         console.log(err);
@@ -147,7 +147,7 @@ module.exports = {
                     else {
                         res.json({
                             status: "success",
-                            data: { user: "User added" }
+                            data: { user: "Thread added" }
                         });
                     }
                 });
@@ -156,7 +156,7 @@ module.exports = {
 
     deleteThreadById: async function (req, res) {
         if (req.params.islandId && req.params.threadId) {
-            Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.params.userId } },
+            Island.findByIdAndUpdate(req.params.islandId, { $pull: { threads: req.params.threadId } },
                 function (err, data) {
                     if (err) {
                         console.log(err);
@@ -164,7 +164,7 @@ module.exports = {
                     else {
                         res.json({
                             status: "success",
-                            data: { user: "User removed" }
+                            data: { user: "Thread removed" }
                         });
                     }
                 });

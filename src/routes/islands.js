@@ -11,7 +11,7 @@ router.get('/', islandController.getAllIslands);
 router.get('/:islandId', islandController.getSingleIsland);
 
 //Get request for create island page
-router.get('/add-island', islandController.addIslandForm); //fix to request add-island form page
+router.get('/add-island/create', islandController.addIslandForm); 
 
 //Create new island
 router.post('/add-island', islandController.addIsland);
