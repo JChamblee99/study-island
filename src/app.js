@@ -6,8 +6,8 @@ const path = require('path');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 
-// controllers
-const auth = require('./controllers/auth.controller');
+// routers
+const authRouter = require('./routes/auth.router');
 
 // middleware
 const cloudflare_middleware = require('./middleware/cloudflare.js');
@@ -61,20 +61,8 @@ let db = require('./database/db');
 
 app.set('port', process.env.PORT || 3000);
 
-// shows registration page to user
-app.get('/register', auth.showRegistration);
-
-// receives registration data, processes it, and handles auth
-app.post('/register', auth.registerNewUser);
-
-// shows login page to user
-app.get('/login', auth.showLogin);
-
-// receives registration login data and handles auth
-app.post('/login', auth.loginUser);
-
-// logs out a user
-app.post('/logout', auth.logoutUser);
+// routes
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
 	res.render('home');
