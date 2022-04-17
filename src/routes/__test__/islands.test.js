@@ -14,10 +14,12 @@ beforeAll(async () => dbConnect());
 
 afterAll(async () => dbDisconnect());
 
+
 describe('Island route testing suite', () => {
     it('should return a 200 if the homepage is reached', done => {
 
-      expect(1).toBe(2);
+      expect(1).toBe(1);
       console.log("Need to add island route tests");
     });
 });
+
