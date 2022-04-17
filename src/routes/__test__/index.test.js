@@ -8,6 +8,6 @@ app.use('/', Index);
 describe('get homepage', () => {
     it('should return a 200 if the homepage is reached', done => {
 
-      
+      expect(1).toBe(1);
     });
 });
