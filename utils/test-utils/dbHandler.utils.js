@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const sampleData = require('../../src/database/sample')
 
 var mongoServer;
 
@@ -15,6 +16,8 @@ exports.dbConnect = async () => {
     };
 
     await mongoose.connect(uri, mongooseOpts);
+
+    await sampleData.build();
 };
 
 exports.dbDisconnect = async () => {

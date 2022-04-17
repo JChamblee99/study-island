@@ -18,4 +18,4 @@ const islandSchema = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Island', islandSchema);
+module.exports = mongoose.model("Island", islandSchema);
