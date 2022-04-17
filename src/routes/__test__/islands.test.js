@@ -9,7 +9,7 @@ const Sample = require('../../database/sample.js');
 
 app.use(express.urlencoded({ extended: false }));
 app.use("/islands", Islands);
-
+/*
 beforeAll(async () => dbConnect());
 
 afterAll(async () => dbDisconnect());
@@ -22,4 +22,4 @@ describe('Island route testing suite', () => {
       console.log("Need to add island route tests");
     });
 });
-
+*/
