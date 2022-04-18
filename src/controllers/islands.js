@@ -129,12 +129,16 @@ module.exports = {
     },
 
     getAllThreads: async function (req, res) {
-        const island = Island.findById(req.params.islandId).populate('threads');
-        const threads = island.threads;
-        res.json({
-            data2: threads,
+        const island = Island.findById(req.params.islandId).populate('threads').exec(
+            function (err, island) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json({
+                        data: island.threads
+                    });
+                }
         });
-        console.log(threads);
     },
 
     addThread: async function (req, res) {
