@@ -4,11 +4,10 @@ const express = require('express')
 const app = express();
 
 app.use('/', Index);
-/*
+
 describe('get homepage', () => {
-    it('should return a 200 if the homepage is reached', done => {
+    it('should return a 200 if the homepage is reached', async () => {
 
       expect(1).toBe(1);
     });
 });
-*/

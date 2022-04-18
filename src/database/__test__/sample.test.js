@@ -14,8 +14,6 @@ describe('Sample Database Test Suite', () => {
 
     it('build sample database', async () => {
 
-        await Sample.build();
-
         const islands = await Island.find().populate({ path: 'threads', populate: { path: 'replies' }});
 
         expect(islands).not.toBeNull();
