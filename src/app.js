@@ -66,10 +66,7 @@ app.use(passport.authenticate('session'));
 app.use('/', indexRouter);
 app.use('/islands', islandRouter);
 app.use('/users', userRouter);
-
-//connect to in-memory db
-const { dbConnect, dbDisconnect } = require('../utils/test-utils/dbHandler.utils');
-dbConnect();
+app.use('/auth', authRouter);
 
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
@@ -82,13 +79,6 @@ app.set('view engine', 'handlebars');
 
 // DB Connection
 let db = require('./database/db');
-
-// routes
-app.use('/auth', authRouter);
-
-app.get('/', (req, res) => {
-	res.render('home');
-});
 
 // 404 catch-all handler (middleware)
 app.use(status_middleware.status_404);
