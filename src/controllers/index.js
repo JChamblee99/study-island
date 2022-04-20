@@ -12,7 +12,7 @@ module.exports = {
     Search: async function (req, res) {
         if (req.query.searchTerm && req.query.searchTerm.trim() != '') {
 
-            const nameResults = await Island.find( {
+            const results = await Island.find( {
                 $or: [ 
                     { 'name': {$regex: req.query.searchTerm } }, 
                     { 'description': { $regex: req.query.searchTerm } } 
@@ -20,14 +20,10 @@ module.exports = {
             }).lean();
 
 
-            if (nameResults) {
-                res.render('searchResults', {nameResults})
+            if (results) {
+                res.render('searchResults', {results})
             } else {
-                islandResults = { data: "No Islands Were Found" };
-                res.json({
-                    status: "fail",
-                    data: { islandResults }
-                });
+                res.render('home')
             }
         } else {
             res.json ({
@@ -36,6 +32,7 @@ module.exports = {
                     q: "No search term provided"
                 }
             })
+            res.render('home');
         }
     }
 
