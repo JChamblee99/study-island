@@ -10,23 +10,18 @@ const Island = mongoose.model("Island");
 module.exports = {
 
     Search: async function (req, res) {
-        if (req.query.q && req.query.q.trim() != '') {
+        if (req.query.searchTerm && req.query.searchTerm.trim() != '') {
 
-            const nameResults = await Island.find({
-                name: { $regex: req.query.q },
+            const nameResults = await Island.find( {
+                $or: [ 
+                    { 'name': {$regex: req.query.searchTerm } }, 
+                    { 'description': { $regex: req.query.searchTerm } } 
+                ] 
             }).lean();
-            const descResults = await Island.find({
-                description: { $regex: req.query.q },
-            }).lean();
 
 
-            if (nameResults || descResults) {
-
-                res.json({
-                    status: "success",
-                    names: { nameResults },
-                    desc: { descResults }
-                });
+            if (nameResults) {
+                res.render('searchResults', {nameResults})
             } else {
                 islandResults = { data: "No Islands Were Found" };
                 res.json({
