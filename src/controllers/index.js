@@ -34,8 +34,13 @@ module.exports = {
                     data: { islandResults }
                 });
             }
-
-
+        } else {
+            res.json ({
+                status: "error",
+                message: {
+                    q: "No search term provided"
+                }
+            })
         }
     }
 
