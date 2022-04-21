@@ -1,9 +1,17 @@
 <hr />
 <h3 class="text-white">Search Results</h3>
 <hr />
-<h4 class="test-white">Found in Island Name</h4>
+<h4 class="text-white">Islands related to your search:</h4>
 <ul class="list-group">
+    {{#if error}}
+    <li class="list-group-item text-white" style="background-color: #2C394B;">{{error}}</li>
+    {{/if}}
+
+    {{#if noResults}}
+    <li class="list-group-item text-white" style="background-color: #2C394B;">{{noResults}}</li>
+    {{/if}}
+
     {{#each results}}
-        <li class="list-group-item text-white" style="background-color: #2C394B;" >{{name}} - {{description}}</li>
+    <li class="list-group-item text-white" style="background-color: #2C394B;">{{name}} - {{description}}</li>
     {{/each}}
 </ul>

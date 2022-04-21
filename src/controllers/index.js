@@ -11,28 +11,23 @@ module.exports = {
 
     Search: async function (req, res) {
         if (req.query.searchTerm && req.query.searchTerm.trim() != '') {
-
-            const results = await Island.find( {
-                $or: [ 
-                    { 'name': {$regex: req.query.searchTerm } }, 
-                    { 'description': { $regex: req.query.searchTerm } } 
-                ] 
+            const results = await Island.find({
+                $or: [
+                    { 'name': { $regex: req.query.searchTerm } },
+                    { 'description': { $regex: req.query.searchTerm } }
+                ]
             }).lean();
 
-
-            if (results) {
-                res.render('searchResults', {results})
+            if (results != '') {
+                res.render('searchResults', { results });
             } else {
-                res.render('home')
+                const noResults = "No results were found";
+                return res.render('searchResults', { noResults });
             }
+
         } else {
-            res.json ({
-                status: "error",
-                message: {
-                    q: "No search term provided"
-                }
-            })
-            res.render('home');
+            const error = "No search term was provided";
+            return res.render('searchResults', { error });
         }
     }
 
