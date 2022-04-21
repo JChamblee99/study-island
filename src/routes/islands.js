@@ -31,13 +31,16 @@ router.put('/:islandId/remove-user/:userId', islandController.deleteUserById);
 //Get all threads
 router.get('/:islandId/threads', islandController.getAllThreads)
 
-// //Get single thread
-// router.get('/:id/threads/:id', islandController.getSingleThread)
+//Get single thread
+router.get('/:islandId/threads/:threadId', islandController.getSingleThread)
 
-// //Create thread
-// router.post('/:id/threads', islandController.addThread);
+//Create thread
+router.post('/:islandId/threads', islandController.addThread);
 
 // //Edit thread
 // router.put('/:id/threads/:id', islandController.editThread);
+
+//Create reply
+router.post('/:islandId/threads/:threadId/replies', islandController.addReply);
 
 module.exports = router;
