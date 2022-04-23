@@ -2,7 +2,6 @@
 const express = require('express');
 const app = express();
 const passport = require('passport');
-const path = require('path');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 
@@ -69,10 +68,6 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/islands', islandRouter);
 app.use('/users', userRouter);
-
-app.get('/', (req, res) => {
-	res.render('home');
-});
 
 // 404 catch-all handler (middleware)
 app.use(status_middleware.status_404);
