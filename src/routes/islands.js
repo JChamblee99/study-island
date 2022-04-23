@@ -34,6 +34,9 @@ router.get('/:islandId/threads', islandController.getAllThreads)
 //Get single thread
 router.get('/:islandId/threads/:threadId', islandController.getSingleThread)
 
+//Create Thread on Island
+router.get('/:islandId/create-thread', islandController.showCreateThread);
+
 //Create thread
 router.post('/:islandId/threads', islandController.addThread);
 

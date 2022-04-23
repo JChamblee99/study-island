@@ -1,30 +1,19 @@
 // dependencies
 const express = require('express');
-
-const indexRouter = require('./routes/index');
-const islandRouter = require('./routes/islands')
-const userRouter = require('./routes/users');
 const app = express();
 const passport = require('passport');
-const path = require('path');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 
 // routers
 const authRouter = require('./routes/auth.router');
+const indexRouter = require('./routes/index');
+const islandRouter = require('./routes/islands')
+const userRouter = require('./routes/users');
 
 // middleware
 const cloudflare_middleware = require('./middleware/cloudflare.js');
 const status_middleware = require('./middleware/status-code.js');
-
-
-// Parse json body submissions
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
-
-app.use(bodyParser.json())
 
 app.set('port', process.env.PORT || 3000);
 
@@ -62,15 +51,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
 
-//routes
-app.use('/', indexRouter);
-app.use('/islands', islandRouter);
-app.use('/users', userRouter);
-
-//connect to in-memory db
-const { dbConnect, dbDisconnect } = require('../utils/test-utils/dbHandler.utils');
-dbConnect();
-
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
 
@@ -84,11 +64,10 @@ app.set('view engine', 'handlebars');
 let db = require('./database/db');
 
 // routes
+app.use('/', indexRouter);
 app.use('/auth', authRouter);
-
-app.get('/', (req, res) => {
-	res.render('home');
-});
+app.use('/islands', islandRouter);
+app.use('/users', userRouter);
 
 // 404 catch-all handler (middleware)
 app.use(status_middleware.status_404);

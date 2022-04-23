@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const app = require('../app');
 
 require('../database/models/island.model');
 require('../database/models/thread.model');
@@ -21,9 +22,9 @@ module.exports = {
     },
 
     getSingleIsland: async function (req, res) {
-        const island = await Island.findById({ _id: req.params.islandId }).lean();
+        const island = await Island.findById({ _id: req.params.islandId }).populate('threads').lean();
         if (island) {
-            res.render('island', { island });
+            res.render('island', island );
             console.log({ island });
         }
         else {
@@ -157,23 +158,21 @@ module.exports = {
     },
 
     addThread: async function (req, res) {
-        const thread = new Thread(req.body);
-        thread.save();
-        Island.findByIdAndUpdate(req.params.islandId,
-            { $push: { threads: thread._id } },
-            function (err) {
-                if (err) {
-                    console.log(err);
-                    res.json({
-                        status: "failed"
-                    });
-                } else {
-                    res.json({
-                        status: "success"
-                    });
-                }
-            }
-        );
+        const data = {author: req.user._id, title: req.body.title, content: req.body.content, replies: []}
+        const thread = await Thread.create(data);
+        console.log(thread)
+        
+        if (req.params.islandId && req.user) {
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { threads: thread._id } },
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.redirect('./');
+                    }
+                });
+        }
     },
 
     deleteThreadById: async function (req, res) {
@@ -194,23 +193,25 @@ module.exports = {
     },
 
     addReply: async function (req, res) {
-        const reply = new Reply(req.body);
-        reply.save();
-        Thread.findByIdAndUpdate(req.params.threadId,
-            { $push: { replies: reply._id } },
-            function (err) {
-                if (err) {
-                    console.log(err);
-                    res.json({
-                        status: "failed"
-                    });
-                } else {
-                    res.json({
-                        status: "success"
-                    });
-                }
-            }
-        );
+        const data = {author: req.user._id, content: req.body.content, replies: []}
+        const reply = await Reply.create(data);
+        console.log(reply)
+        
+        if (req.params.threadId && req.user) {
+            Thread.findByIdAndUpdate(req.params.threadId, { $push: { replies: reply._id } },
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.redirect('./');
+                    }
+                });
+        }
     },
+
+    showCreateThread: (req, res) => {
+        res.render('createThread', { islandID: req.params.islandId });
+    }
 
 }

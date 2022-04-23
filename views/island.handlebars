@@ -5,6 +5,7 @@
         <input type="text" name="search" placeholder="Search.."> <br><br>
         <textarea id="islandbanner" name="islandbanner" placeholder="Island Name + Description Banner..."></textarea>
     </form>
+    <a href="./{{_id}}/create-thread">Create Thread</a>
 </div>
 
 <div class="row">
@@ -15,7 +16,7 @@
   
   <div class="column middle">
     <h2>Threads</h2>
-    {{#each island.threads}}
+    {{#each threads}}
         <li class="list-gr">title: {{title}} </li>
     {{/each}}
   </div>
