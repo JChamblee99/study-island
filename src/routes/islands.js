@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const islandController = require('../controllers/islands');
+const auth_middleware = require('../middleware/auth');
+
+//Enforce login
+router.use(auth_middleware.isLoggedIn)
 
 /* Island Routes */
 //Get all islands
