@@ -130,16 +130,34 @@ module.exports = {
     },
 
     getAllThreads: async function (req, res) {
-        const island = Island.findById(req.params.islandId).populate('threads');
-        const threads = island.threads;
-        res.json({
-            data2: threads,
-        });
-        console.log(threads);
+        Island.findById(req.params.islandId).exec(
+            function (err, island) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json({
+                        data: island.threads
+                    });
+                }
+            }
+        );
+    },
+
+    getSingleThread: async function (req, res) {
+        Thread.findById(req.params.threadId).populate("replies").exec(
+            function (err, thread) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json({
+                        data: thread
+                    });
+                }
+            }
+        );
     },
 
     addThread: async function (req, res) {
-        
         const data = {author: req.user._id, title: req.body.title, content: req.body.content, replies: []}
         const thread = await Thread.create(data);
         console.log(thread)
@@ -169,6 +187,24 @@ module.exports = {
                             status: "success",
                             data: { user: "Thread removed" }
                         });
+                    }
+                });
+        }
+    },
+
+    addReply: async function (req, res) {
+        const data = {author: req.user._id, content: req.body.content, replies: []}
+        const reply = await Reply.create(data);
+        console.log(reply)
+        
+        if (req.params.threadId && req.user) {
+            Thread.findByIdAndUpdate(req.params.threadId, { $push: { replies: reply._id } },
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.redirect('./');
                     }
                 });
         }
