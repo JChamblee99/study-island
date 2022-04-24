@@ -12,14 +12,14 @@ const Reply = mongoose.model("Reply");
 
 module.exports = {
 
-getAllUsers: async function (req, res) {
-    User.find().then(function (allUsers) {
-        res.json({
-            status: "success",
-            data: { users: allUsers },
-        });
+    getAllUsers: async function (req, res) {
+        User.find().then(function (allUsers) {
+            res.json({
+                status: "success",
+                data: { users: allUsers },
+            });
 
-    });
-},
+        });
+    },
 
 }
