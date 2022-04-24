@@ -54,6 +54,7 @@ module.exports.build = async () => {
     user.islands.push(island);
 
     await user.save();
+    await nestedReply.save();
     await reply.save();
     await thread.save();
     await island.save();

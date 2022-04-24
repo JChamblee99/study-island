@@ -27,6 +27,7 @@ if(process.env.COOKIE_SECRET) {
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
+app.use(express.json());
 
 // {secure: true} breaks sessions in non-https environments
 // This insures that cookies are secure in Production where it matters
