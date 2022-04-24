@@ -44,10 +44,19 @@ router.get('/:islandId/create-thread', islandController.showCreateThread);
 //Create thread
 router.post('/:islandId/threads', islandController.addThread);
 
+//Delete thread
+router.delete('/:islandId/threads/:threadId', islandController.deleteThreadById);
+
 // //Edit thread
 // router.put('/:id/threads/:id', islandController.editThread);
 
 //Create reply
 router.post('/:islandId/threads/:threadId/replies', islandController.addReply);
+
+//Get single reply
+router.get('/:islandId/threads/:threadId/replies/:replyId', islandController.getSingleReply);
+
+//Delete reply
+router.delete('/:islandId/threads/:threadId/replies/:replyId', islandController.deleteReplyById);
 
 module.exports = router;

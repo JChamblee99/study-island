@@ -180,9 +180,6 @@ module.exports = {
             let island = await Island.findById(req.params.islandId);
             let thread = await Thread.findById(req.params.threadId);
 
-            console.log(island);
-            console.log(thread);
-
             let exists = island && thread;
             let containsThread = island.threads.includes(thread._id);
             let hasPermission = (thread.author._id.equals(req.user._id) || island.mods.includes(req.user._id));
@@ -218,6 +215,42 @@ module.exports = {
                     }
                 });
         }
+    },
+
+    deleteReplyById: async function (req, res) {
+        if (req.params.islandId && req.params.threadId) {
+            let island = await Island.findById(req.params.islandId);
+            let parent = await Thread.findById(req.params.threadId)
+            let reply = await Reply.findById(req.params.replyId);
+
+            let exists = island && reply;
+            let hasPermission = (reply.author._id.equals(req.user._id) || island.mods.includes(req.user._id));
+
+            if (exists && hasPermission) {
+                reply.remove();
+                res.json({
+                    status: "success"
+                });
+            } else {
+                res.json({
+                    status: "fail"
+                });
+            }
+        }
+    },
+
+    getSingleReply: async function (req, res) {
+        Reply.findById(req.params.replyId).populate("replies").exec(
+            function (err, reply) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json({
+                        data: reply
+                    });
+                }
+            }
+        );
     },
 
     showCreateThread: (req, res) => {
