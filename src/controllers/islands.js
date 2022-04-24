@@ -60,21 +60,12 @@ module.exports = {
         if (req.params.islandId && req.body) {
             var updatedIsland = req.body;
             try {
-                const island = await Island.findById(req.params.islandId);
-                if (island.mods.includes(req.user._id)) {
-                    await Island.findByIdAndUpdate({ _id: req.params.islandId }, req.body).lean();
-                    res.status(201);
-                    res.json({
-                        status: "success",
-                        data: { updatedIsland },
-                    });
-                } else {
-                    res.status(403);
-                    res.json({
-                        status: "error",
-                        data: "Permission denied"
-                    });
-                }
+                await Island.findByIdAndUpdate({ _id: req.params.islandId }, req.body).lean();
+                res.status(201);
+                res.json({
+                    status: "success",
+                    data: { updatedIsland },
+                });
             } catch (err) {
                 res.json({
                     status: "error",
@@ -91,20 +82,11 @@ module.exports = {
 
     deleteIslandById: async function (req, res) {
         if (req.params.islandId) {
-            const island = await Island.findById(req.params.islandId);
-            if (island.mods.includes(req.user._id)) {
-                await Island.findByIdAndDelete({ _id: req.params.islandId }).lean();
-                res.json({
-                    status: "success",
-                    data: {},
-                });
-            } else {
-                res.status(403);
-                    res.json({
-                    status: "error",
-                    data: "Permission denied"
-                });
-            }
+            await Island.findByIdAndDelete({ _id: req.params.islandId }).lean();
+            res.json({
+                status: "success",
+                data: {},
+            });
         } else {
             res.json({
                 status: "fail",
@@ -115,55 +97,37 @@ module.exports = {
 
     addUserById: async function (req, res) {
         if (req.params.islandId && req.params.userId) {
-            const island = await Island.findById(req.params.islandId);
-            if (island.mods.includes(req.user._id)) {
-                Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.params.userId } },
-                    function (err, data) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        else {
-                            res.json({
-                                status: "success",
-                                data: { user: "User added" }
-                            });
-                        }
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.params.userId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
                     }
-                );
-            } else {
-                res.status(403);
-                    res.json({
-                    status: "error",
-                    data: "Permission denied"
-                });
-            }
+                    else {
+                        res.json({
+                            status: "success",
+                            data: { user: "User added" }
+                        });
+                    }
+                }
+            );
         }
     },
 
     deleteUserById: async function (req, res) {
         if (req.params.islandId && req.params.userId) {
-            const island = await Island.findById(req.params.islandId);
-            if (island.mods.includes(req.user._id)) {
-                Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.params.userId } },
-                    function (err, data) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        else {
-                            res.json({
-                                status: "success",
-                                data: { user: "User removed" }
-                            });
+            Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.params.userId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
                     }
-                    }
-                );
-            } else {
-                res.status(403);
-                    res.json({
-                    status: "error",
-                    data: "Permission denied"
-                });
-            }
+                    else {
+                        res.json({
+                            status: "success",
+                            data: { user: "User removed" }
+                        });
+                }
+                }
+            );
         }
     },
 
@@ -197,28 +161,20 @@ module.exports = {
 
     addThread: async function (req, res) {
         if (req.params.islandId) {
-            const island = await Island.findById(req.params.islandId);
-            if (island.users.includes(req.user._id)) {
-                const data = { author: req.user._id, title: req.body.title, content: req.body.content };
-                const thread = await Thread.create(data);
-                console.log(thread);
+            const data = { author: req.user._id, title: req.body.title, content: req.body.content };
+            const thread = await Thread.create(data);
+            console.log(thread);
 
-                Island.findByIdAndUpdate(req.params.islandId, { $push: { threads: thread._id } },
-                    function (err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        else {
-                            res.redirect('./');
-                        }
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { threads: thread._id } },
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                }
+                    else {
+                        res.redirect('./');
                     }
-                );
-            } else {
-                res.json({
-                    status: "error",
-                    data: "Permission denied"
-                });
-            }
+                }
+            );
         }
     },
 
@@ -229,9 +185,8 @@ module.exports = {
 
             let exists = island && thread;
             let containsThread = island.threads.includes(thread._id);
-            let hasPermission = (thread.author._id.equals(req.user._id) || island.mods.includes(req.user._id));
 
-            if (exists && containsThread && hasPermission) {
+            if (exists && containsThread) {
                 island.threads.pull(thread);
                 island.save();
                 thread.remove();
@@ -280,9 +235,8 @@ module.exports = {
             let reply = await Reply.findById(req.params.replyId);
 
             let exists = island && reply;
-            let hasPermission = (reply.author._id.equals(req.user._id) || island.mods.includes(req.user._id));
 
-            if (exists && hasPermission) {
+            if (exists) {
                 reply.remove();
                 res.json({
                     status: "success"
