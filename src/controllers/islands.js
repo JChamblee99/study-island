@@ -57,10 +57,10 @@ module.exports = {
     },
 
     editIsland: async function (req, res) {
-        if (req.params.id && req.body) {
+        if (req.params.islandId && req.body) {
             var updatedIsland = req.body;
             try {
-                await Island.findByIdAndUpdate({ _id: req.params.id }, req.body).lean();
+                await Island.findByIdAndUpdate({ _id: req.params.islandId }, req.body).lean();
                 res.status(201);
                 res.json({
                     status: "success",
@@ -81,8 +81,8 @@ module.exports = {
     },
 
     deleteIslandById: async function (req, res) {
-        if (req.params.id) {
-            await Island.findByIdAndDelete({ _id: req.params.id }).lean();
+        if (req.params.islandId) {
+            await Island.findByIdAndDelete({ _id: req.params.islandId }).lean();
             res.json({
                 status: "success",
                 data: {},
