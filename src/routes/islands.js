@@ -5,7 +5,7 @@ const islandController = require('../controllers/islands');
 const auth_middleware = require('../middleware/auth');
 
 //Enforce login
-router.use(auth_middleware.isLoggedIn)
+router.use(auth_middleware.isLoggedIn);
 
 /* Island Routes */
 //Get all islands
@@ -48,7 +48,7 @@ router.post('/:islandId/threads', auth_middleware.isIslandUser, islandController
 router.delete('/:islandId/threads/:threadId', auth_middleware.isAuthorOrModerator, islandController.deleteThreadById);
 
 // //Edit thread
-// router.put('/:threadId/threads/:threadId', auth_middleware.isAuthor, islandController.editThread);
+// router.put('/:islandId/threads/:threadId', auth_middleware.isAuthor, islandController.editThread);
 
 //Create reply
 router.post('/:islandId/threads/:threadId/replies', auth_middleware.isIslandUser, islandController.addReply);
