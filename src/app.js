@@ -11,17 +11,13 @@ const indexRouter = require('./routes/index');
 const islandRouter = require('./routes/islands')
 const userRouter = require('./routes/users');
 
-// middleware
+// app level middleware
 const cloudflare_middleware = require('./middleware/cloudflare.js');
 const status_middleware = require('./middleware/status-code.js');
 
 app.set('port', process.env.PORT || 3000);
 
-let COOKIE_SECRET = '7yhhs3n7cplj2b3k79o7'; // random dev string
-
-if(process.env.COOKIE_SECRET) {
-	COOKIE_SECRET = process.env.COOKIE_SECRET; // actual secret
-}
+const COOKIE_SECRET = process.env.COOKIE_SECRET || '7yhhs3n7cplj2b3k79o7';
 
 // main config
 app.use(express.static('public'));
@@ -48,6 +44,7 @@ if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging' )
 	}));
 }
 
+// Passport Config
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
