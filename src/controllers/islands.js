@@ -158,11 +158,11 @@ module.exports = {
     },
 
     addThread: async function (req, res) {
-        const data = {author: req.user._id, title: req.body.title, content: req.body.content, replies: []}
+        const data = { author: req.user._id, title: req.body.title, content: req.body.content };
         const thread = await Thread.create(data);
-        console.log(thread)
-        
-        if (req.params.islandId && req.user) {
+        console.log(thread);
+
+        if (req.params.islandId) {
             Island.findByIdAndUpdate(req.params.islandId, { $push: { threads: thread._id } },
                 function (err) {
                     if (err) {
@@ -177,18 +177,28 @@ module.exports = {
 
     deleteThreadById: async function (req, res) {
         if (req.params.islandId && req.params.threadId) {
-            Island.findByIdAndUpdate(req.params.islandId, { $pull: { threads: req.params.threadId } },
-                function (err, data) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    else {
-                        res.json({
-                            status: "success",
-                            data: { user: "Thread removed" }
-                        });
-                    }
+            let island = await Island.findById(req.params.islandId);
+            let thread = await Thread.findById(req.params.threadId);
+
+            console.log(island);
+            console.log(thread);
+
+            let exists = island && thread;
+            let containsThread = island.threads.includes(thread._id);
+            let hasPermission = (thread.author._id.equals(req.user._id) || island.mods.includes(req.user._id));
+
+            if (exists && containsThread && hasPermission) {
+                island.threads.pull(thread);
+                island.save();
+                thread.remove();
+                res.json({
+                    status: "success"
                 });
+            } else {
+                res.json({
+                    status: "fail"
+                });
+            }
         }
     },
 
@@ -197,7 +207,7 @@ module.exports = {
         const reply = await Reply.create(data);
         console.log(reply)
         
-        if (req.params.threadId && req.user) {
+        if (req.params.threadId) {
             Thread.findByIdAndUpdate(req.params.threadId, { $push: { replies: reply._id } },
                 function (err) {
                     if (err) {
@@ -215,3 +225,4 @@ module.exports = {
     }
 
 }
+
