@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const app = require('../app');
 
 require('../database/models/island.model');
 require('../database/models/thread.model');
