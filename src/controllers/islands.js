@@ -196,20 +196,29 @@ module.exports = {
     },
 
     addThread: async function (req, res) {
-        const data = { author: req.user._id, title: req.body.title, content: req.body.content };
-        const thread = await Thread.create(data);
-        console.log(thread);
-
         if (req.params.islandId) {
-            Island.findByIdAndUpdate(req.params.islandId, { $push: { threads: thread._id } },
-                function (err) {
-                    if (err) {
-                        console.log(err);
+            const island = await Island.findById(req.params.islandId);
+            if (island.mods.includes(req.user._id)) {
+                const data = { author: req.user._id, title: req.body.title, content: req.body.content };
+                const thread = await Thread.create(data);
+                console.log(thread);
+
+                Island.findByIdAndUpdate(req.params.islandId, { $push: { threads: thread._id } },
+                    function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.redirect('./');
+                        }
                     }
-                    else {
-                        res.redirect('./');
-                    }
+                );
+            } else {
+                res.json({
+                    status: "error",
+                    data: "Permission denied"
                 });
+            }
         }
     },
 
