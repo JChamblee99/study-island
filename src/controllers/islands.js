@@ -60,12 +60,21 @@ module.exports = {
         if (req.params.islandId && req.body) {
             var updatedIsland = req.body;
             try {
-                await Island.findByIdAndUpdate({ _id: req.params.islandId }, req.body).lean();
-                res.status(201);
-                res.json({
-                    status: "success",
-                    data: { updatedIsland },
-                });
+                const island = await Island.findById(req.params.islandId);
+                if (island.mods.includes(req.user._id)) {
+                    await Island.findByIdAndUpdate({ _id: req.params.islandId }, req.body).lean();
+                    res.status(201);
+                    res.json({
+                        status: "success",
+                        data: { updatedIsland },
+                    });
+                } else {
+                    res.status(403);
+                    res.json({
+                        status: "error",
+                        data: "Permission denied"
+                    });
+                }
             } catch (err) {
                 res.json({
                     status: "error",
@@ -82,11 +91,20 @@ module.exports = {
 
     deleteIslandById: async function (req, res) {
         if (req.params.islandId) {
-            await Island.findByIdAndDelete({ _id: req.params.islandId }).lean();
-            res.json({
-                status: "success",
-                data: {},
-            });
+            const island = await Island.findById(req.params.islandId);
+            if (island.mods.includes(req.user._id)) {
+                await Island.findByIdAndDelete({ _id: req.params.islandId }).lean();
+                res.json({
+                    status: "success",
+                    data: {},
+                });
+            } else {
+                res.status(403);
+                    res.json({
+                    status: "error",
+                    data: "Permission denied"
+                });
+            }
         } else {
             res.json({
                 status: "fail",
@@ -97,35 +115,55 @@ module.exports = {
 
     addUserById: async function (req, res) {
         if (req.params.islandId && req.params.userId) {
-            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.params.userId } },
-                function (err, data) {
-                    if (err) {
-                        console.log(err);
+            const island = await Island.findById(req.params.islandId);
+            if (island.mods.includes(req.user._id)) {
+                Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.params.userId } },
+                    function (err, data) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.json({
+                                status: "success",
+                                data: { user: "User added" }
+                            });
+                        }
                     }
-                    else {
-                        res.json({
-                            status: "success",
-                            data: { user: "User added" }
-                        });
-                    }
+                );
+            } else {
+                res.status(403);
+                    res.json({
+                    status: "error",
+                    data: "Permission denied"
                 });
+            }
         }
     },
 
     deleteUserById: async function (req, res) {
         if (req.params.islandId && req.params.userId) {
-            Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.params.userId } },
-                function (err, data) {
-                    if (err) {
-                        console.log(err);
+            const island = await Island.findById(req.params.islandId);
+            if (island.mods.includes(req.user._id)) {
+                Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.params.userId } },
+                    function (err, data) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.json({
+                                status: "success",
+                                data: { user: "User removed" }
+                            });
                     }
-                    else {
-                        res.json({
-                            status: "success",
-                            data: { user: "User removed" }
-                        });
                     }
+                );
+            } else {
+                res.status(403);
+                    res.json({
+                    status: "error",
+                    data: "Permission denied"
                 });
+            }
         }
     },
 
