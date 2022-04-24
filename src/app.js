@@ -4,7 +4,6 @@ const app = express();
 const passport = require('passport');
 const session = require('express-session');
 const cookie = require('cookie-parser');
-const bodyParser = require('body-parser')
 
 // routers
 const authRouter = require('./routes/auth.router');
@@ -28,7 +27,7 @@ if(process.env.COOKIE_SECRET) {
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
-app.use(bodyParser.json());
+app.use(express.json());
 
 // {secure: true} breaks sessions in non-https environments
 // This insures that cookies are secure in Production where it matters
