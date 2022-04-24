@@ -5,7 +5,6 @@ const authService = require('../services/auth.service');
 
 // Passport Config
 const User = require('../database/models/user.model');
-const app = require('../app');
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
