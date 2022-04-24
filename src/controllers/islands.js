@@ -196,7 +196,7 @@ module.exports = {
             } else {
                 res.json({
                     status: "error",
-                    data: "Permission denied"
+                    data: "Not found"
                 });
             }
         }
@@ -204,27 +204,19 @@ module.exports = {
 
     addReply: async function (req, res) {
         if (req.params.threadId) {
-            const island = await Island.findById(req.params.islandId);
-            if (island.users.includes(req.user._id)) {
-                const data = {author: req.user._id, content: req.body.content, replies: []}
-                const reply = await Reply.create(data);
-                console.log(reply);
-                Thread.findByIdAndUpdate(req.params.threadId, { $push: { replies: reply._id } },
-                    function (err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        else {
-                            res.redirect('./');
-                        }
+            const data = {author: req.user._id, content: req.body.content, replies: []}
+            const reply = await Reply.create(data);
+            console.log(reply);
+            Thread.findByIdAndUpdate(req.params.threadId, { $push: { replies: reply._id } },
+                function (err) {
+                    if (err) {
+                        console.log(err);
                     }
-                );
-            } else {
-                res.json({
-                    status: "error",
-                    data: "Permission denied"
-                });
-            }
+                    else {
+                        res.redirect('./');
+                    }
+                }
+            );
         }
     },
 
@@ -244,7 +236,7 @@ module.exports = {
             } else {
                 res.json({
                     status: "error",
-                    data: "Permission denied"
+                    data: "Not found"
                 });
             }
         }
