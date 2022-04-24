@@ -231,7 +231,8 @@ module.exports = {
                 });
             } else {
                 res.json({
-                    status: "fail"
+                    status: "error",
+                    data: "Permission denied"
                 });
             }
         }
@@ -271,7 +272,8 @@ module.exports = {
                 });
             } else {
                 res.json({
-                    status: "fail"
+                    status: "error",
+                    data: "Permission denied"
                 });
             }
         }
