@@ -39,13 +39,13 @@ module.exports = {
     },
 
     addIsland: function (req, res) {
-        const newIsland = req.body;
         try {
-            Island.create(req.body);
+            const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: req.body.users, mods: req.body.mods };
+            const island = Island.create(data);
             res.status(201);
             res.json({
                 status: "sucess",
-                data: { newIsland },
+                data: { island },
             });
         } catch (err) {
             res.json({
@@ -57,13 +57,13 @@ module.exports = {
 
     editIsland: async function (req, res) {
         if (req.params.islandId && req.body) {
-            var updatedIsland = req.body;
             try {
-                await Island.findByIdAndUpdate({ _id: req.params.islandId }, req.body).lean();
+                const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: req.body.users, mods: req.body.mods };
+                await Island.findByIdAndUpdate({ _id: req.params.islandId }, data).lean();
                 res.status(201);
                 res.json({
                     status: "success",
-                    data: { updatedIsland },
+                    data: { data },
                 });
             } catch (err) {
                 res.json({
