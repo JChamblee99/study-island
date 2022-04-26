@@ -131,7 +131,7 @@ module.exports = {
     },
 
     getAllThreads: async function (req, res) {
-        Island.findById(req.params.islandId).exec(
+        Island.findById(req.params.islandId).populate("threads").exec(
             function (err, island) {
                 if (err) {
                     console.log(err);
