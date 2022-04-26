@@ -6,31 +6,29 @@ const islandRouter = require('./routes/islands')
 const userRouter = require('./routes/users');
 const app = express();
 const passport = require('passport');
-const path = require('path');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 
 // routers
 const authRouter = require('./routes/auth.router');
+const indexRouter = require('./routes/index');
+const islandRouter = require('./routes/islands')
+const userRouter = require('./routes/users');
 
-// middleware
+// app level middleware
 const cloudflare_middleware = require('./middleware/cloudflare.js');
 const status_middleware = require('./middleware/status-code.js');
 
-
 app.set('port', process.env.PORT || 3000);
 
-let COOKIE_SECRET = '7yhhs3n7cplj2b3k79o7'; // random dev string
-
-if(process.env.COOKIE_SECRET) {
-	COOKIE_SECRET = process.env.COOKIE_SECRET; // actual secret
-}
+const COOKIE_SECRET = process.env.COOKIE_SECRET || '7yhhs3n7cplj2b3k79o7';
 
 // main config
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
+app.use(express.json());
 
 // {secure: true} breaks sessions in non-https environments
 // This insures that cookies are secure in Production where it matters
@@ -51,6 +49,7 @@ if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging' )
 	}));
 }
 
+// Passport Config
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
@@ -72,6 +71,12 @@ app.set('view engine', 'handlebars');
 
 // DB Connection
 let db = require('./database/db');
+
+// routes
+app.use('/', indexRouter);
+app.use('/auth', authRouter);
+app.use('/islands', islandRouter);
+app.use('/users', userRouter);
 
 // 404 catch-all handler (middleware)
 app.use(status_middleware.status_404);

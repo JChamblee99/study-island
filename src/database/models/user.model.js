@@ -32,6 +32,11 @@ let userSchema = mongoose.Schema({
         enum: ['user', 'mod', 'admin'],
         default: 'user'
     },
+    active: {
+        type: String,
+        enum: ['inactive', 'active'],
+        default: 'inactive'
+    },
     islands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Island' }]
 
 });
