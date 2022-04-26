@@ -18,14 +18,6 @@ const cloudflare_middleware = require('./middleware/cloudflare.js');
 const status_middleware = require('./middleware/status-code.js');
 
 
-// Parse json body submissions
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
-
-app.use(bodyParser.json())
-
 app.set('port', process.env.PORT || 3000);
 
 let COOKIE_SECRET = '7yhhs3n7cplj2b3k79o7'; // random dev string
@@ -36,6 +28,7 @@ if(process.env.COOKIE_SECRET) {
 
 // main config
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
 
