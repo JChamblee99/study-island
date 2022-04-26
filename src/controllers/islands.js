@@ -130,10 +130,6 @@ module.exports = {
     getAllThreads: async function (req, res) {
         const island = Island.findById(req.params.islandId).populate('threads');
         const threads = island.threads;
-        res.json({
-            data2: threads,
-        });
-        console.log(threads);
     },
 
     addThread: async function (req, res) {
