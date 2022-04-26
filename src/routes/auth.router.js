@@ -19,4 +19,10 @@ router.post('/login', auth.loginUser);
 // logs out a user
 router.post('/logout', auth.logoutUser);
 
+// shows email verification page to user
+router.get('/request-email-verification/:userId/:email', auth.requestEmailVerification);
+
+// receives verification email 
+router.get('/verify-email/:token', auth.verifyEmail);
+
 module.exports = router;
