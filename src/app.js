@@ -1,5 +1,9 @@
 // dependencies
 const express = require('express');
+
+const indexRouter = require('./routes/index');
+const islandRouter = require('./routes/islands')
+const userRouter = require('./routes/users');
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
@@ -21,6 +25,7 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET || '7yhhs3n7cplj2b3k79o7';
 
 // main config
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
 app.use(express.json());
@@ -48,6 +53,12 @@ if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging' )
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
+
+//routes
+app.use('/', indexRouter);
+app.use('/islands', islandRouter);
+app.use('/users', userRouter);
+app.use('/auth', authRouter);
 
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);

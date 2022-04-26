@@ -49,7 +49,34 @@ module.exports.build = async () => {
         threads: [thread]
     };
 
+    const islandData2 = {
+        name: 'testIsland2',
+        description: "This is a test island",
+        privacy: 'public',
+        users: [user],
+        threads: [thread]
+    };
+
+    const islandData3 = {
+        name: 'testIsland3',
+        description: "This is a test island",
+        privacy: 'public',
+        users: [user],
+        threads: [thread]
+    };
+
+    const islandData4 = {
+        name: 'testIsland4',
+        description: "This is a test island",
+        privacy: 'public',
+        users: [user],
+        threads: [thread]
+    };
+
     const island = new Island(islandData);
+    const island2 = new Island(islandData2);
+    const island3 = new Island(islandData3);
+    const island4 = new Island(islandData4);
 
     user.islands.push(island);
 
@@ -58,4 +85,7 @@ module.exports.build = async () => {
     await reply.save();
     await thread.save();
     await island.save();
+    await island2.save();
+    await island3.save();
+    await island4.save();
 }
