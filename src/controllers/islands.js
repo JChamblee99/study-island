@@ -21,9 +21,9 @@ module.exports = {
 
     getSingleIsland: async function (req, res) {
         const island = await Island.findById({ _id: req.params.islandId }).lean();
+        
         if (island) {
             res.render('island', { island });
-            console.log({ island });
         }
         else {
             res.json({

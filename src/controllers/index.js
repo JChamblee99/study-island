@@ -21,7 +21,7 @@ module.exports = {
             if (results != '') {
                 res.render('searchResults', { results });
             } else {
-                const noResults = "No results were found";
+                const noResults = "No results were found for '" + req.query.searchTerm + "'";
                 return res.render('searchResults', { noResults });
             }
 
