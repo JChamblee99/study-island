@@ -38,12 +38,14 @@ module.exports = {
 
     addIsland: function (req, res) {
         try {
-            const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: req.body.users, mods: req.body.mods };
+            const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: [req.user], mods: [req.user] };
+            console.log(data)
             const island = Island.create(data);
+
             //res.status(201);
             //res.json({
                 //status: "sucess",
-                //data: { island },
+                //data: { data },
             //});
             res.redirect('/islands');
         } catch (err) {
@@ -259,4 +261,3 @@ module.exports = {
     }
 
 }
-
