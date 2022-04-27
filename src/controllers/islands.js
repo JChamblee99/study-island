@@ -42,11 +42,6 @@ module.exports = {
             console.log(data)
             const island = Island.create(data);
 
-            //res.status(201);
-            //res.json({
-                //status: "sucess",
-                //data: { data },
-            //});
             res.redirect('/islands');
         } catch (err) {
             res.json({
