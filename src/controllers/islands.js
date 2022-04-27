@@ -41,6 +41,7 @@ module.exports = {
     addIsland: function (req, res) {
         try {
             const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: [req.user], mods: [req.user] };
+            console.log(data)
             const island = Island.create(data);
 
             res.status(201);
