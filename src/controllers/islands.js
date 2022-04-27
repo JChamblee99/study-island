@@ -42,10 +42,11 @@ module.exports = {
         try {
             const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: [req.user], mods: [req.user] };
             const island = Island.create(data);
+
             res.status(201);
             res.json({
                 status: "sucess",
-                data: { island },
+                data: { data },
             });
         } catch (err) {
             res.json({
