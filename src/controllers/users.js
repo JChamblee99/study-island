@@ -30,5 +30,15 @@ module.exports = {
                 user: user
             });
 
-    }
+    },
+
+    getCurrentUser: async (req, res) => {
+
+        let user = await User.findById(req.user._id).populate("islands").lean();
+        console.log(user);
+        res.render('user', {
+            user: user
+        });
+
+}
 }
