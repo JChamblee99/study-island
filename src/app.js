@@ -1,9 +1,5 @@
 // dependencies
 const express = require('express');
-
-const indexRouter = require('./routes/index');
-const islandRouter = require('./routes/islands')
-const userRouter = require('./routes/users');
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
