@@ -1,13 +1,20 @@
 <h1 class="text-white">User Profile</h1>
 <div class="row text-white">
-{{#if username}}
-{{username}}
-
+    {{#if user.username}}
+    <hh2 class="text-white">
+        {{user.username}}
+        </h2>
+        {{/if}}
 </div>
-{{#each islands}}
-<div>
-    <a class="text-white" href="/islands/{{_id}}">{{name}}</a>
-    <p class="text-white">{{description}}</p>
+{{#if user.islands}}
+{{#each user.islands}}
+<div class="row">
+    <div class="row">
+        <a class="text-white" href="/islands/{{_id}}">{{name}}</a>
+        <div class="row text-white">
+            {{description}}
+        </div>
+    </div>
 </div>
 {{/each}}
 {{/if}}
