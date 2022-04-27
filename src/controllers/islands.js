@@ -147,17 +147,12 @@ module.exports = {
     },
 
     getSingleThread: async function (req, res) {
-        Thread.findById(req.params.threadId).populate("replies").exec(
-            function (err, thread) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.json({
-                        data: thread
-                    });
-                }
-            }
-        );
+        let thread = await Thread.findById(req.params.threadId).populate("replies").lean();
+        console.log(thread);
+        res.render('thread', {
+            thread: thread
+        });
+
     },
 
     addThread: async function (req, res) {
