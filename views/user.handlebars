@@ -1,0 +1,13 @@
+<h1 class="text-white">User Profile</h1>
+<div class="row text-white">
+{{#if username}}
+{{username}}
+
+</div>
+{{#each islands}}
+<div>
+    <a class="text-white" href="/islands/{{_id}}">{{name}}</a>
+    <p class="text-white">{{description}}</p>
+</div>
+{{/each}}
+{{/if}}

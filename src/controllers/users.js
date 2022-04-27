@@ -22,4 +22,18 @@ module.exports = {
         });
     },
 
+    getUser: async (req, res) => {
+        let user = User.findById(req.params.userId).populate("islands").exec(
+            (err, user) => {
+                if (err) {
+                    console.log(err);
+                }
+            }
+        );
+        res.render('user', {
+            user: user
+        })
+
+    }
+
 }
