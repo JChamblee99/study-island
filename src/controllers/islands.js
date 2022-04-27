@@ -38,23 +38,21 @@ module.exports = {
         res.render('makeIsland');
     },
 
-    addIsland: function (req, res) {
+    addIsland: async function (req, res) {
         try {
             const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: [req.user], mods: [req.user] };
             console.log(data)
             const island = Island.create(data);
 
-            res.status(201);
-            res.json({
-                status: "sucess",
-                data: { data },
-            });
+            await User.findByIdAndUpdate(req.user._id, { $push: { islands: island._id }});
+
         } catch (err) {
-            res.json({
+            console.log({
                 status: "error",
                 data: err.message,
             });
         }
+        res.redirect('/islands');
     },
 
     editIsland: async function (req, res) {
@@ -97,8 +95,8 @@ module.exports = {
     },
 
     addUserById: async function (req, res) {
-        if (req.params.islandId && req.params.userId) {
-            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.params.userId } },
+        if (req.params.islandId && req.user) {
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.user } },
                 function (err, data) {
                     if (err) {
                         console.log(err);
@@ -111,6 +109,10 @@ module.exports = {
                     }
                 }
             );
+
+            req.user.islands.push(req.params.islandId);
+            
+
         }
     },
 
@@ -129,6 +131,9 @@ module.exports = {
                 }
                 }
             );
+
+            req.user.islands.pull(req.params.islandId);
+
         }
     },
 
