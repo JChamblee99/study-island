@@ -5,8 +5,6 @@ require('../database/models/thread.model');
 require('../database/models/reply.model');
 require('../database/models/user.model');
 
-
-
 const Island = mongoose.model("Island");
 const User = mongoose.model("User");
 const Thread = mongoose.model("Thread");
@@ -42,11 +40,12 @@ module.exports = {
         try {
             const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: req.body.users, mods: req.body.mods };
             const island = Island.create(data);
-            res.status(201);
-            res.json({
-                status: "sucess",
-                data: { island },
-            });
+            //res.status(201);
+            //res.json({
+                //status: "sucess",
+                //data: { island },
+            //});
+            res.redirect('/islands');
         } catch (err) {
             res.json({
                 status: "error",
