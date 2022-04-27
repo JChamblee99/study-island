@@ -22,7 +22,6 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET || '7yhhs3n7cplj2b3k79o7';
 // main config
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
 app.use(express.json());
 
