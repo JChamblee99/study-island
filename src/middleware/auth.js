@@ -74,7 +74,7 @@ module.exports = {
     isIslandPublic: async (req, res, next) => {
         let island = await Island.findById(req.params.islandId);
 
-        if(island.privacy.equals("public")) {
+        if(island.privacy == "public") {
             next();
         } else {
             res.status(403);

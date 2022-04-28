@@ -17,7 +17,7 @@ module.exports = {
     getAllIslands: async function (req, res) {
         const islands = await Island.find().lean();
         res.render('allIslands', { islands });
-        console.log({ islands });
+        console.log({islands});
     },
 
     getSingleIsland: async function (req, res) {
