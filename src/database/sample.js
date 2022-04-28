@@ -9,7 +9,6 @@ module.exports.build = async () => {
         lastName: 'Doe',
         username: 'johnDoe',
         email: 'john@email.com',
-        password: 'password',
         role: 'user',
         islands: []
     };

@@ -23,10 +23,6 @@ let userSchema = mongoose.Schema({
         lowercase: true,
         trim: true
     },
-    password: {
-        type: String,
-        trim: true
-    },
     role: {
         type: String,
         enum: ['user', 'mod', 'admin'],
