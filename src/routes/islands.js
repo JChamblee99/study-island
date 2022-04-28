@@ -59,8 +59,11 @@ router.delete('/:islandId/threads/:threadId', auth_middleware.isAuthorOrModerato
 // //Edit thread
 // router.put('/:islandId/threads/:threadId', auth_middleware.isAuthor, islandController.editThread);
 
-//Create reply
+//Create reply to a thread
 router.post('/:islandId/threads/:threadId/replies', auth_middleware.isIslandUser, islandController.addReply);
+
+//Create reply to a reply
+router.post('/:islandId/threads/:threadId/replies/:replyId', auth_middleware.isIslandUser, islandController.addReplyToReply);
 
 //Get single reply
 router.get('/:islandId/threads/:threadId/replies/:replyId', auth_middleware.isIslandUser, islandController.getSingleReply);

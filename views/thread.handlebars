@@ -1,6 +1,106 @@
 <div class="row text-white">
     <h1>{{thread.title}}</h1>
-    <div class="row text-white">
+    <div class="col text-white">
         {{thread.content}}
     </div>
-</div>
+    <!-- Button to Open the Modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#threadReplyModal">
+        Reply to Thread
+    </button>
+
+    <!-- The Modal -->
+    <div class="modal" id="threadReplyModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form action="/islands/{{islandId}}/threads/{{thread._id}}/replies" method="post">
+                        <section>
+                            <label for="content">Reply Content</label>
+                            <input type="text" name="content" id="content">
+                        </section>
+                        <section>
+                            <input type="submit" value="Submit">
+                        </section>
+                    </form>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-white">
+        {{#each thread.replies}}
+        <div class="row">
+
+            <div class="col text-white">
+                {{author.username}}
+            </div>
+            <div class="col text-white">
+                {{content}}
+            </div>
+            <!--
+            
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyReplyModal">
+                Reply to Comment
+            </button>
+
+            <div class="modal" id="replyReplyModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Heading</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        
+                        <div class="modal-body">
+
+                            <form action="/islands/{{../islandId}}/threads/{{../thread._id}}/replies/{{_id}}"
+                                method="post">
+                                <section>
+                                    <label for="content">Reply Content</label>
+                                    <input type="text" name="content" id="content">
+                                </section>
+                                <section>
+                                    <input type="submit" value="Submit">
+                                </section>
+                            </form>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+            <!--
+            {{#each replies.replies}}
+                <div class="row">
+                    <div class="col">
+
+                    </div>
+                </div>
+            {{/each}}
+            -->
+        </div>
+        {{/each}}
+    </div>
