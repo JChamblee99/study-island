@@ -95,24 +95,35 @@ module.exports = {
     },
 
     addUserById: async function (req, res) {
-        if (req.params.islandId && req.user) {
-            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.user } },
+        if (req.params.islandId && req.params.userId) {
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.params.userId } },
                 function (err, data) {
                     if (err) {
                         console.log(err);
                     }
                     else {
-                        res.json({
+                        console.log({
                             status: "success",
-                            data: { user: "User added" }
+                            data: { user: "User added to island" }
                         });
                     }
                 }
             );
 
-            req.user.islands.push(req.params.islandId);
-            
-
+            User.findByIdAndUpdate(req.params.userId, { $push: { islands: req.params.islandId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "Island added to user" }
+                        });
+                    }
+                }
+            );
+            res.redirect('/islands/' + req.params.islandId);
         }
     },
 
@@ -124,17 +135,39 @@ module.exports = {
                         console.log(err);
                     }
                     else {
-                        res.json({
+                        console.log({
                             status: "success",
-                            data: { user: "User removed" }
+                            data: { user: "User removed from island" }
                         });
-                }
+                    }
                 }
             );
 
-            req.user.islands.pull(req.params.islandId);
-
+            User.findByIdAndUpdate(req.params.userId, { $pull: { islands: req.params.islandId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "Island removed from user" }
+                        });
+                    }
+                }
+            );
+            res.redirect('/islands/' + req.params.islandId);
         }
+    },
+
+    joinPublicIsland: async function (req, res) {
+        if(req.params.islandId && req.user) {
+            
+        }
+    },
+
+    leaveIsland: async function (req, res) {
+
     },
 
     getAllThreads: async function (req, res) {
