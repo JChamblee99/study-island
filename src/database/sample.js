@@ -68,7 +68,7 @@ module.exports.build = async () => {
     const islandData4 = {
         name: 'testIsland4',
         description: "This is a test island",
-        privacy: 'public',
+        privacy: 'private',
         users: [user],
         threads: [thread]
     };
