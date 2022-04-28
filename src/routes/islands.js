@@ -17,6 +17,9 @@ router.get('/:islandId', auth_middleware.isIslandUser, islandController.getSingl
 //Get request for create island page
 router.get('/add-island/create', islandController.addIslandForm);
 
+//Post request for create island page
+router.post('/add-island/create', islandController.addIsland);
+
 //Create new island
 router.post('/add-island', islandController.addIsland);
 
