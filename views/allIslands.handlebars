@@ -5,6 +5,8 @@
     <hr />
     <div class="island-list">
         <div class="d-grid gap-3">
+            <button onclick="location.href = '/islands/add-island/create';">Add Island</button>
+            
             {{#each islands}}
             <div class="row">
                 <a class="island-link text-decoration-none mt-mb-5" href="/islands/{{_id}}">
