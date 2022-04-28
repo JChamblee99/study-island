@@ -162,11 +162,40 @@ module.exports = {
 
     joinPublicIsland: async function (req, res) {
         if(req.params.islandId && req.user) {
-            
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.user } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "User successfully joined island" }
+                        });
+                    }
+                }
+            );
+            req.user.islands.push(req.params.islandId);
         }
     },
 
     leaveIsland: async function (req, res) {
+        if(req.params.islandId && req.user) {
+            Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.user } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "User successfully left island" }
+                        });
+                    }
+                }
+            );
+            req.user.islands.pull(req.params.islandId);
+        }
 
     },
 
