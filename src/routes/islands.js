@@ -36,7 +36,7 @@ router.put('/:islandId/remove-user/:userId', auth_middleware.isIslandModerator, 
 router.put('/:islandId/join-island', auth_middleware.isIslandPublic, islandController.joinPublicIsland);
 
 //User Leaves island
-router.put('/:islandId/leave-island', islandController.leaveIsland);
+router.put('/:islandId/leave-island', auth_middleware.isIslandUser, islandController.leaveIsland);
 
 //Get all threads
 router.get('/:islandId/threads', auth_middleware.isIslandUser, islandController.getAllThreads);
