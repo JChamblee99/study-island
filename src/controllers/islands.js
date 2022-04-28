@@ -176,7 +176,9 @@ module.exports = {
                 }
             );
             req.user.islands.push(req.params.islandId);
+            req.user.save();
         }
+        res.redirect('/islands');
     },
 
     leaveIsland: async function (req, res) {
@@ -195,7 +197,9 @@ module.exports = {
                 }
             );
             req.user.islands.pull(req.params.islandId);
+            req.user.save();
         }
+        res.redirect('/islands');
 
     },
 
