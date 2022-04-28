@@ -69,6 +69,20 @@ module.exports = {
                 data: "Permission denied"
             });
         }
-    }
+    },
+
+    isIslandPublic: async (req, res, next) => {
+        let island = await Island.findById(req.params.islandId);
+
+        if(island.privacy == "public") {
+            next();
+        } else {
+            res.status(403);
+            res.json({
+                status: "error",
+                data: "Permission denied"
+            });
+        }
+    },
 };
 
