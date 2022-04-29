@@ -38,7 +38,7 @@ module.exports = {
             //$("#staticBackdrop").modal("show");
             //res.render("JoinIslandPopup", {
                 //userId: req.params.userId, 
-                //islandId: req.params.islandId
+                //request: req
             //});//islandController.joinIslandPopup(req);
             
             //if (islandController.joinIslandPopup) {
@@ -49,11 +49,11 @@ module.exports = {
                 //res.redirect('/islands');
             //}
 
-            //res.status(403);
-            //res.json({
-                //status: "error",
-                //data: "Permission denied"
-            //});
+            res.status(403);
+            res.json({
+                status: "error",
+                data: "Permission denied"
+            });
         }
     },
 
