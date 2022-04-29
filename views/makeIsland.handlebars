@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+
+    <div class="form-container">
+      <h1 class="header mx-3 my-3 text-white">Create An Island</h1>
+      <div class="form-body">
+        <form id="new-island" action="/islands/add-island/create" method="post" class="mb-2">
+
+          <div class="container">
+            <div class="row">
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="text-white" for="name">Island Name</label>
+                  <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group mx-5">
+                  <label class="text-white" for="privary">Privacy</label>
+                  <select class="form-control" id="privacy" name="privacy">
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="form-group mt-4">
+                <label class="text-white" for="notes">Island Description</label>
+                <textarea class="form-control" id="description" name="description" rows="5"
+                  placeholder="Write Island description..." required></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-secondary mx-3 my-3">Submit</button>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

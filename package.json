@@ -3,20 +3,32 @@
   "version": "0.0.0",
   "description": "A platform to organize study groups",
   "engines": {
-    "node": "17.x"
+    "node": "^16.14.0",
+    "npm": "^8.3.1"
   },
-  "main": "index.js",
+  "main": "./src/server.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
+    "start": "node ./src/server.js",
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "dependencies": {
-    "ejs": "^3.1.6",
+    "cloudflare-ip": "^0.0.7",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
-    "express-handlebars": "^6.0.2"
+    "express-handlebars": "^6.0.2",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.4",
+    "nodemailer": "^6.7.3",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^7.0.0"
   },
   "devDependencies": {
     "got": "^11.3.0",
+    "jest": "^27.5.1",
+    "mongodb-memory-server": "^8.4.0",
+    "supertest": "^6.2.2",
     "tape": "^4.7.0"
   },
   "repository": {

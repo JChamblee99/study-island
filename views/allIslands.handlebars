@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="Island-list-header mt-mb-4 mx-auto text-center" style="width: 100px">
+        <h2 class="text-white">Islands</h2>
+    </div>
+    <hr />
+    <div class="island-list">
+        <div class="button-container mx-3 my-3 ">
+            <button class="btn btn-secondary " type="button" onclick="location.href = '/islands/add-island/create';">Add Island</button>
+        </div>
+        <div class="d-grid gap-3">            
+            {{#each islands}}
+            <div class="row">
+                <a class="island-link text-decoration-none mt-mb-5" href="/islands/{{_id}}">
+                    <div class="list-group-item border-5" style="background-color: #2C394B;">
+                        <h5 class="text-white" style="text-indent: 20px">{{name}}</h5>
+                        <p class="description text-white" style="text-indent: 40px">{{description}}</p>
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <hr />
+</div>
+

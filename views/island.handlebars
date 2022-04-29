@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="Island-header mt-mb-4 mx-auto text-center">
+    <h2 class="text-white">{{name}}</h2>
+  </div>
+  <a class="btn btn-primary" href="/islands/{{_id}}/create-thread/" role="button">Create a Thread</a>
+  <div class="description-container">
+    <div class="card my-5" style="background-color: #334756;">
+      <p class="island-description lead text-white">{{description}}</p>
+    </div>
+  </div>
+  <div class="threads-container" style="background-color: #334756;">
+    {{#each threads}}
+    <div class="thread-detail-container d-grid gap-3">
+      <a class="thread-link text-decoration-none mt-mb-5">
+        <div class="list-group-item border-5" style="background-color: #2C394B;">
+          <a href="/islands/{{../_id}}/threads/{{_id}}" class="text-white" style="text-indent: 20px">{{title}}</a>
+        </div>
+      </a>
+    </div>
+    {{/each}}
+  </div>
+</div>
