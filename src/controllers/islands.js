@@ -158,6 +158,24 @@ module.exports = {
     },
 
     joinPublicIsland: async function (req, res) {
+        if(req.params.islandId && req.user) {
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.user } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "User successfully joined island" }
+                        });
+                    }
+                }
+            );
+            req.user.islands.push(req.params.islandId);
+            req.user.save();
+        }
+        res.redirect('/islands');
         /*if(req.body.islandId && req.body.userId) {//&& req.user) {
             Island.findByIdAndUpdate(req.body.islandId, { $push: { users: User.findById(req.body.userId) } },//req.user } },
                 function (err, data) {

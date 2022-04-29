@@ -35,16 +35,16 @@ module.exports = {
         if (island.users.includes(req.user._id)) {
             next();
         } else {
-            res.render("JoinIslandPopup", {
-                userId: req.user._id,
-                islandId: req.params.islandId
-            });
-
-            //res.status(403);
-            //res.json({
-                //status: "error",
-                //data: "Permission denied"
+            //res.render("JoinIslandPopup", {
+                //userId: req.user._id,
+                //islandId: req.params.islandId
             //});
+
+            res.status(403);
+            res.json({
+                status: "error",
+                data: "Permission denied"
+            });
         }
     },
 
