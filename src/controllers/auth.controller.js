@@ -18,18 +18,27 @@ const auth = {
 
     // Creates new user according to Form Data
     registerNewUser: (req, res) => {
+        let active = "";
+        if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
+        {
+            active = "inactive";
+        } else {
+            active = "active";
+        }
+      
         try {
             let user = User.register(new User({
                 username: req.body.username,
                 email: req.body.email,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                active: process.env.NODE_ENV === 'production' ? 'inactive' : 'active'
+                active: active
             }), req.body.password, (err, user) => {
                 if (err) {
                     return res.render('error', { error: "Registration error" })
                 }
-                if (process.env.NODE_ENV === 'production') {
+
+                if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
                     passport.authenticate('local')(req, res, () => {
                         res.redirect(`./request-email-verification/${user._id}/${req.body.email}`)
                     })
