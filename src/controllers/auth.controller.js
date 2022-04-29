@@ -25,6 +25,7 @@ const auth = {
         } else {
             active = "active";
         }
+      
         try {
             let user = User.register(new User({
                 username: req.body.username,
@@ -36,6 +37,7 @@ const auth = {
                 if (err) {
                     return res.render('error', { error: "Registration error" })
                 }
+
                 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
                     passport.authenticate('local')(req, res, () => {
                         res.redirect(`./request-email-verification/${user._id}/${req.body.email}`)
