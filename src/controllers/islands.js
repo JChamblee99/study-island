@@ -216,13 +216,7 @@ module.exports = {
     },
 
     getSingleThread: async function (req, res) {
-        let thread = await Thread.findById(req.params.threadId).populate({
-            path: "replies",
-            populate: [
-                {path: "author"},
-                {path: "replies"}
-            ]
-        }).lean();
+        let thread = await Thread.findById(req.params.threadId).populate('replies').lean();
         console.log(thread);
         res.render('thread', {
             thread: thread,

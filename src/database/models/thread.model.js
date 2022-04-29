@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const autoPopulate = require('../../../utils/autopopulate')
 
 const threadSchema = mongoose.Schema({
 
@@ -13,5 +14,7 @@ const threadSchema = mongoose.Schema({
     },
     replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }]
 });
+
+threadSchema.pre('findOne', autoPopulate('author')).pre('find', autoPopulate('author'));
 
 module.exports = mongoose.model('Thread', threadSchema);

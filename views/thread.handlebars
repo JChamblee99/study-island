@@ -124,7 +124,7 @@
 
                             <div class="modal-body">
 
-                                <form action="/islands/{{../islandId}}/threads/{{../thread._id}}/replies/{{_id}}"
+                                <form action="/islands/{{../../islandId}}/threads/{{../../thread._id}}/replies/{{_id}}"
                                     method="post">
                                     <section>
                                         <label for="content">Reply Content</label>
@@ -143,7 +143,168 @@
                         </div>
                     </div>
                 </div>
+                {{#each replies}}
+                <div class="row">
 
+                    <div class="col text-white">
+                        {{author.username}}
+                    </div>
+                    <div class="col text-white">
+                        {{content}}
+                    </div>
+
+                    <div class="col text-white">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#replyReplyModal{{_id}}">
+                            Reply to Comment
+                        </button>
+                    </div>
+
+                    <div class="modal" id="replyReplyModal{{_id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Modal Heading</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+
+                                <div class="modal-body">
+
+                                    <form
+                                        action="/islands/{{../../../islandId}}/threads/{{../../../thread._id}}/replies/{{_id}}"
+                                        method="post">
+                                        <section>
+                                            <label for="content">Reply Content</label>
+                                            <input type="text" name="content" id="content">
+                                        </section>
+                                        <section>
+                                            <input type="submit" value="Submit">
+                                        </section>
+                                    </form>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{#each replies}}
+                    <div class="row">
+
+                        <div class="col text-white">
+                            {{author.username}}
+                        </div>
+                        <div class="col text-white">
+                            {{content}}
+                        </div>
+
+                        <div class="col text-white">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#replyReplyModal{{_id}}">
+                                Reply to Comment
+                            </button>
+                        </div>
+
+                        <div class="modal" id="replyReplyModal{{_id}}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Modal Heading</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+
+                                    <div class="modal-body">
+
+                                        <form
+                                            action="/islands/{{../../../../islandId}}/threads/{{../../../../thread._id}}/replies/{{_id}}"
+                                            method="post">
+                                            <section>
+                                                <label for="content">Reply Content</label>
+                                                <input type="text" name="content" id="content">
+                                            </section>
+                                            <section>
+                                                <input type="submit" value="Submit">
+                                            </section>
+                                        </form>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{#each replies}}
+                        <div class="row">
+
+                            <div class="col text-white">
+                                {{author.username}}
+                            </div>
+                            <div class="col text-white">
+                                {{content}}
+                            </div>
+
+                            <div class="col text-white">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#replyReplyModal{{_id}}">
+                                    Reply to Comment
+                                </button>
+                            </div>
+
+                            <div class="modal" id="replyReplyModal{{_id}}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Modal Heading</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+
+
+                                        <div class="modal-body">
+
+                                            <form
+                                                action="/islands/{{../../../../../islandId}}/threads/{{../../../../../thread._id}}/replies/{{_id}}"
+                                                method="post">
+                                                <section>
+                                                    <label for="content">Reply Content</label>
+                                                    <input type="text" name="content" id="content">
+                                                </section>
+                                                <section>
+                                                    <input type="submit" value="Submit">
+                                                </section>
+                                            </form>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {{/each}}
+                    </div>
+
+                    {{/each}}
+                </div>
+
+                {{/each}}
             </div>
 
             {{/each}}
