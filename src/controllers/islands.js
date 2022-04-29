@@ -12,9 +12,9 @@ const Reply = mongoose.model("Reply");
 
 module.exports = {
     getAllIslands: async function (req, res) {
-        const islands = await Island.find().lean();
+        const islands = await Island.find({ privacy: "public" }).lean();
         res.render('allIslands', { islands });
-        console.log({ islands });
+        console.log({islands});
     },
 
     getSingleIsland: async function (req, res) {
@@ -35,24 +35,21 @@ module.exports = {
         res.render('makeIsland');
     },
 
-    addIsland: function (req, res) {
+    addIsland: async function (req, res) {
         try {
             const data = { name: req.body.name, description: req.body.description, privacy: req.body.privacy, users: [req.user], mods: [req.user] };
-            console.log(data)
-            const island = Island.create(data);
+            let island = new Island(data);
+            island.save();
+            req.user.islands.push(island._id);
+            req.user.save();
 
-            //res.status(201);
-            //res.json({
-                //status: "sucess",
-                //data: { data },
-            //});
-            res.redirect('/islands');
         } catch (err) {
-            res.json({
+            console.log({
                 status: "error",
                 data: err.message,
             });
         }
+        res.redirect('/islands');
     },
 
     editIsland: async function (req, res) {
@@ -102,13 +99,28 @@ module.exports = {
                         console.log(err);
                     }
                     else {
-                        res.json({
+                        console.log({
                             status: "success",
-                            data: { user: "User added" }
+                            data: { user: "User added to island" }
                         });
                     }
                 }
             );
+
+            User.findByIdAndUpdate(req.params.userId, { $push: { islands: req.params.islandId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "Island added to user" }
+                        });
+                    }
+                }
+            );
+            res.redirect('/islands/' + req.params.islandId);
         }
     },
 
@@ -120,14 +132,72 @@ module.exports = {
                         console.log(err);
                     }
                     else {
-                        res.json({
+                        console.log({
                             status: "success",
-                            data: { user: "User removed" }
+                            data: { user: "User removed from island" }
                         });
-                }
+                    }
                 }
             );
+
+            User.findByIdAndUpdate(req.params.userId, { $pull: { islands: req.params.islandId } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "Island removed from user" }
+                        });
+                    }
+                }
+            );
+            res.redirect('/islands/' + req.params.islandId);
         }
+    },
+
+    joinPublicIsland: async function (req, res) {
+        if(req.params.islandId && req.user) {
+            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.user } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "User successfully joined island" }
+                        });
+                    }
+                }
+            );
+            req.user.islands.push(req.params.islandId);
+            req.user.save();
+        }
+        res.redirect('/islands');
+    },
+
+    leaveIsland: async function (req, res) {
+        if(req.params.islandId && req.user) {
+            Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.user } },
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log({
+                            status: "success",
+                            data: { user: "User successfully left island" }
+                        });
+                    }
+                }
+            );
+            req.user.islands.pull(req.params.islandId);
+            req.user.save();
+        }
+        res.redirect('/islands');
+
     },
 
     getAllThreads: async function (req, res) {
