@@ -11,4 +11,22 @@ const replySchema = mongoose.Schema({
 
 });
 
+replySchema.pre('find', function (next) {
+    if (this.options._recursed) {
+        return next();
+    }
+    this.populate({path: "author", select: "username" ,options: {_recursed: true}});
+    this.populate({path: "replies", select: "author content replies", options: {_recursed: true}});
+    next();
+});
+
+replySchema.pre('findOne', function (next) {
+    if (this.options._recursed) {
+        return next();
+    }
+    this.populate({path: "author", select: "username" ,options: {_recursed: true}});
+    this.populate({path: "replies", select: "author content replies", options: {_recursed: true}});
+    next();
+});
+
 module.exports = mongoose.model('Reply', replySchema);
