@@ -3,6 +3,7 @@ require('../database/models/user.model');
 
 const mongoose = require('mongoose');
 const Island = mongoose.model("Island");
+const islandController = require('../controllers/islands');
 
 module.exports = {
 
@@ -34,11 +35,25 @@ module.exports = {
         if (island.users.includes(req.user._id)) {
             next();
         } else {
-            res.status(403);
-            res.json({
-                status: "error",
-                data: "Permission denied"
-            });
+            //$("#staticBackdrop").modal("show");
+            //res.render("JoinIslandPopup", {
+                //userId: req.params.userId, 
+                //islandId: req.params.islandId
+            //});//islandController.joinIslandPopup(req);
+            
+            //if (islandController.joinIslandPopup) {
+                //islandController.addUserById(req);
+                //res.redirect('/islands');
+            //} else {
+                //islandController.permissionDenied
+                //res.redirect('/islands');
+            //}
+
+            //res.status(403);
+            //res.json({
+                //status: "error",
+                //data: "Permission denied"
+            //});
         }
     },
 

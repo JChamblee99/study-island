@@ -1,0 +1,30 @@
+<!-- Button trigger modal
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+-->
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Join Island?</h5>
+        <button onclick="location.href = '/islands';" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          You are not a member of this island. Do you want to join?
+      </div>
+      <div class="modal-footer">
+        <button onclick="location.href = '/islands';" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button onclick="location.href = '/:{{islandId}}/add-user/:{{userId}}';" method="put" type="button" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#staticBackdrop").modal('show');
+    });
+</script>

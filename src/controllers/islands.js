@@ -11,7 +11,6 @@ const Thread = mongoose.model("Thread");
 const Reply = mongoose.model("Reply");
 
 module.exports = {
-
     getAllIslands: async function (req, res) {
         const islands = await Island.find().lean();
         res.render('allIslands', { islands });
