@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 	res.render('home');
 });
 
+//Search page
 router.get('/search', auth_middleware.isLoggedIn, homeController.Search);
 
 module.exports = router;

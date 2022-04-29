@@ -53,7 +53,7 @@ const auth = {
     // Logs in user
     loginUser: passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/login'
+        failureRedirect: '/auth/login'
     }),
 
     // Logs out User

@@ -216,17 +216,13 @@ module.exports = {
     },
 
     getSingleThread: async function (req, res) {
-        Thread.findById(req.params.threadId).populate("replies").exec(
-            function (err, thread) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.json({
-                        data: thread
-                    });
-                }
-            }
-        );
+        let thread = await Thread.findById(req.params.threadId).populate('replies').lean();
+        console.log(thread);
+        res.render('thread', {
+            thread: thread,
+            islandId: req.params.islandId
+        });
+
     },
 
     addThread: async function (req, res) {
@@ -284,6 +280,24 @@ module.exports = {
                     }
                     else {
                         res.redirect('./');
+                    }
+                }
+            );
+        }
+    },
+
+    addReplyToReply: async function (req, res) {
+        if (req.params.threadId) {
+            const data = {author: req.user._id, content: req.body.content, replies: []}
+            const reply = await Reply.create(data);
+            console.log(reply);
+            Reply.findByIdAndUpdate(req.params.replyId, { $push: { replies: reply._id } },
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.redirect('../');
                     }
                 }
             );
