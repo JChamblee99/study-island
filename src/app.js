@@ -27,21 +27,22 @@ app.use(express.json());
 
 // {secure: true} breaks sessions in non-https environments
 // This insures that cookies are secure in Production where it matters
-if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging' )
+if(["production", "staging", "development"].indexOf(process.env.NODE_ENV) == -1)
 {
-	app.use(session({
-		secret: COOKIE_SECRET,
-		resave: false,
-		saveUninitialized: false,
-		cookie: { secure: true }
-	}));
+    app.use(session({
+        proxy: true,
+        secret: COOKIE_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: true }
+    }));
 } else {
-	app.use(session({
-		secret: COOKIE_SECRET,
-		resave: false,
-		saveUninitialized: false,
-		cookie: { secure: false }
-	}));
+    app.use(session({
+        secret: COOKIE_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: false }
+    }));
 }
 
 // Passport Config
@@ -60,7 +61,7 @@ app.use(cloudflare_middleware);
 
 // set up handlebars view engine
 let handlebars = require('express-handlebars')
-	.create({ defaultLayout: 'main' });
+    .create({ defaultLayout: 'main' });
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
