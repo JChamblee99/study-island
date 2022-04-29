@@ -35,25 +35,16 @@ module.exports = {
         if (island.users.includes(req.user._id)) {
             next();
         } else {
-            //$("#staticBackdrop").modal("show");
-            //res.render("JoinIslandPopup", {
-                //userId: req.params.userId, 
-                //request: req
-            //});//islandController.joinIslandPopup(req);
-            
-            //if (islandController.joinIslandPopup) {
-                //islandController.addUserById(req);
-                //res.redirect('/islands');
-            //} else {
-                //islandController.permissionDenied
-                //res.redirect('/islands');
-            //}
-
-            res.status(403);
-            res.json({
-                status: "error",
-                data: "Permission denied"
+            res.render("JoinIslandPopup", {
+                userId: req.user._id,
+                islandId: req.params.islandId
             });
+
+            //res.status(403);
+            //res.json({
+                //status: "error",
+                //data: "Permission denied"
+            //});
         }
     },
 

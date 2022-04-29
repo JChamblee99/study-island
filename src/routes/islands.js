@@ -36,7 +36,7 @@ router.put('/:islandId/add-user/:userId', auth_middleware.isIslandModerator, isl
 router.put('/:islandId/remove-user/:userId', auth_middleware.isIslandModerator, islandController.deleteUserById);
 
 //User Joins island
-router.put('/:islandId/join-island', auth_middleware.isIslandPublic, islandController.joinPublicIsland);
+router.put('/:islandId/join-island/:userId', auth_middleware.isIslandPublic, islandController.joinPublicIsland);
 
 //User Leaves island
 router.put('/:islandId/leave-island', auth_middleware.isIslandUser, islandController.leaveIsland);

@@ -17,10 +17,7 @@
       </div>
       <div class="modal-footer">
         <button onclick="location.href = '/islands';" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <script>
-            res.local.req = req;
-        </script>
-        <button onclick="location.href = '/:{{req.params.islandId}}/join-island';" method="put" type="button" class="btn btn-primary">Yes</button>
+        <button onclick="location.href = '/{{islandId}}/join-island/{{userId}}';" method="put" type="button" class="btn btn-primary">Yes</button>
       </div>
     </div>
   </div>

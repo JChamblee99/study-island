@@ -158,8 +158,8 @@ module.exports = {
     },
 
     joinPublicIsland: async function (req, res) {
-        if(req.params.islandId && req.user) {
-            Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.user } },
+        /*if(req.body.islandId && req.body.userId) {//&& req.user) {
+            Island.findByIdAndUpdate(req.body.islandId, { $push: { users: User.findById(req.body.userId) } },//req.user } },
                 function (err, data) {
                     if (err) {
                         console.log(err);
@@ -172,9 +172,10 @@ module.exports = {
                     }
                 }
             );
-            req.user.islands.push(req.params.islandId);
-            req.user.save();
+            User.findById(req.body.userId).push(req.body.islandId);//req.user.islands.push(req.params.islandId);            
+            User.findById(req.body.userId).save();//req.user.save();
         }
+        */
         res.redirect('/islands');
     },
 
