@@ -15,6 +15,7 @@ const threadSchema = mongoose.Schema({
     replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }]
 });
 
+//recursive middleware for populating nested fields
 threadSchema.pre('findOne', autoPopulate('author')).pre('find', autoPopulate('author'));
 
 module.exports = mongoose.model('Thread', threadSchema);
