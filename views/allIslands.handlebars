@@ -4,9 +4,10 @@
     </div>
     <hr />
     <div class="island-list">
-        <div class="d-grid gap-3">
-            <button onclick="location.href = '/islands/add-island/create';">Add Island</button>
-            
+        <div class="button-container mx-3 my-3 ">
+            <button class="btn btn-secondary " type="button" onclick="location.href = '/islands/add-island/create';">Add Island</button>
+        </div>
+        <div class="d-grid gap-3">            
             {{#each islands}}
             <div class="row">
                 <a class="island-link text-decoration-none mt-mb-5" href="/islands/{{_id}}">
