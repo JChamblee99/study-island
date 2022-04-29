@@ -16,7 +16,6 @@ replySchema.pre('find', function (next) {
         return next();
     }
     this.populate({path: "author", select: "username" ,options: {_recursed: true}});
-    this.populate({path: "replies", select: "author content replies", options: {_recursed: true}});
     next();
 });
 
@@ -25,7 +24,6 @@ replySchema.pre('findOne', function (next) {
         return next();
     }
     this.populate({path: "author", select: "username" ,options: {_recursed: true}});
-    this.populate({path: "replies", select: "author content replies", options: {_recursed: true}});
     next();
 });
 
