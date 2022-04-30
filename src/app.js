@@ -53,12 +53,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
 
-//routes
-app.use('/', indexRouter);
-app.use('/islands', islandRouter);
-app.use('/users', userRouter);
-app.use('/auth', authRouter);
-
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
 
