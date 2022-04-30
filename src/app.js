@@ -34,7 +34,6 @@ if(["production", "staging", "development"].indexOf(process.env.NODE_ENV) > -1)
         secret: COOKIE_SECRET,
         resave: false,
         saveUninitialized: false,
-        proxy: true,
         cookie: { secure: true }
     }));
 } else {
