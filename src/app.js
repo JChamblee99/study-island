@@ -25,36 +25,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
 app.use(express.json());
 
-// {secure: true} breaks sessions in non-https environments
-// This insures that cookies are secure in Production where it matters
-if(["production", "staging", "development"].indexOf(process.env.NODE_ENV) > -1)
-{
-    app.use(session({
-        proxy: true,
-        secret: COOKIE_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: { secure: true }
-    }));
-} else {
-    app.use(session({
-        secret: COOKIE_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: { secure: false }
-    }));
-}
+app.use(session({
+    secret: COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
 
 // Passport Config
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
-
-//routes
-app.use('/', indexRouter);
-app.use('/islands', islandRouter);
-app.use('/users', userRouter);
-app.use('/auth', authRouter);
 
 // Cloudflare isolation handler (middleware)
 app.use(cloudflare_middleware);
