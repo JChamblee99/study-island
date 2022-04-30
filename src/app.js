@@ -27,7 +27,7 @@ app.use(express.json());
 
 // {secure: true} breaks sessions in non-https environments
 // This insures that cookies are secure in Production where it matters
-if(["production", "staging", "development"].indexOf(process.env.NODE_ENV) == -1)
+if(["production", "staging", "development"].indexOf(process.env.NODE_ENV) > -1)
 {
     app.use(session({
         proxy: true,
