@@ -45,7 +45,7 @@ if(["production", "staging", "development"].indexOf(process.env.NODE_ENV) > -1)
     }));
 }
 
-app.enable('trust proxy', 1);
+app.enable('trust proxy', 2);
 
 // Passport Config
 app.use(passport.initialize());
