@@ -25,27 +25,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookie(COOKIE_SECRET));
 app.use(express.json());
 
-// {secure: true} breaks sessions in non-https environments
-// This insures that cookies are secure in Production where it matters
-if(["production", "staging", "development"].indexOf(process.env.NODE_ENV) > -1)
-{
-    app.use(session({
-        proxy: true,
-        secret: COOKIE_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: { secure: true }
-    }));
-} else {
-    app.use(session({
-        secret: COOKIE_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: { secure: false }
-    }));
-}
-
-app.enable('trust proxy', 2);
+app.use(session({
+    secret: COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
 
 // Passport Config
 app.use(passport.initialize());
