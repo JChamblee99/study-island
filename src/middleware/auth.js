@@ -35,10 +35,7 @@ module.exports = {
             next();
         } else {
             res.status(403);
-            res.json({
-                status: "error",
-                data: "Permission denied"
-            });
+            res.render('error', { error: "You are not a member of that island" });
         }
     },
 
