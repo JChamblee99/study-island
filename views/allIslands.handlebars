@@ -5,9 +5,10 @@
     <hr />
     <div class="island-list">
         <div class="button-container mx-3 my-3 ">
-            <button class="btn btn-secondary " type="button" onclick="location.href = '/islands/add-island/create';">Add Island</button>
+            <button class="btn btn-secondary " type="button" onclick="location.href = '/islands/add-island/create';">Add
+                Island</button>
         </div>
-        <div class="d-grid gap-3">            
+        <div class="d-grid gap-3">
             {{#each islands}}
             <div class="row">
                 <a class="island-link text-decoration-none mt-mb-5" href="/islands/{{_id}}">
@@ -16,10 +17,12 @@
                         <p class="description text-white" style="text-indent: 40px">{{description}}</p>
                     </div>
                 </a>
+                <form action="/islands/{{_id}}/join-island" method="post">
+                    <input type="submit" value="Join Island">
+                </form>
             </div>
             {{/each}}
         </div>
     </div>
     <hr />
 </div>
-

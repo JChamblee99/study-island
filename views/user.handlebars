@@ -1,20 +1,33 @@
-<h1 class="text-white">User Profile</h1>
-<div class="row text-white">
-    {{#if user.username}}
-    <hh2 class="text-white">
-        {{user.username}}
-        </h2>
-        {{/if}}
-</div>
-{{#if user.islands}}
-{{#each user.islands}}
-<div class="row">
-    <div class="col">
-        <a class="text-white" href="/islands/{{_id}}">{{name}}</a>
-        <div class="row text-white">
-            {{description}}
+<div class="profile-container">
+
+    <div class="row mx-3 my-3">
+        <div class="col-12 col-md-6 border-5">
+            <h1 class="text-white">User Profile</h1>
+            <div class="user-name text-white text-right">
+                {{#if user.username}}
+                <h3 class="text-white">
+                    {{user.username}}
+                </h3>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mx-3 my-3">
+        <div class="d-grid gap-3 mx-4">
+            {{#if user.islands}}
+            {{#each user.islands}}
+            <div class="row mx-5">
+                <a class="island-link text-decoration-none mt-mb-5" href="/islands/{{_id}}">
+                    <div class="list-group-item border-5" style="background-color: #2C394B;">
+                        <h5 class="text-white" style="text-indent: 20px">{{name}}</h5>
+                        <p class="description text-white" style="text-indent: 40px">{{description}}</p>
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+            {{/if}}
         </div>
     </div>
 </div>
-{{/each}}
-{{/if}}
