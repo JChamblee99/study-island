@@ -13,23 +13,27 @@ const Reply = mongoose.model("Reply");
 module.exports = {
 
     getAllIslands: async function (req, res) {
-        const islands = await Island.find({ privacy: "public" }).lean();
-        res.render('allIslands', { islands });
-        console.log({islands});
+        try {
+            const islands = await Island.find({ privacy: "public" }).lean();
+            res.render('allIslands', { islands });
+            console.log({ islands });
+        } catch (error) {
+            res.render('error');
+        }
+
     },
 
     getSingleIsland: async function (req, res) {
-        const island = await Island.findById({ _id: req.params.islandId }).populate('threads').lean();
-        if (island) {
-            res.render('island', island );
-            console.log({ island });
+        try {
+            const island = await Island.findById({ _id: req.params.islandId }).populate('threads').lean();
+            if (island) {
+                res.render('island', island);
+                console.log({ island });
+            }
+        } catch (error) {
+            res.render('error');
         }
-        else {
-            res.json({
-                status: "error",
-                data: "No Island with that id was found"
-            });
-        }
+
     },
 
     addIslandForm: function (req, res) {
@@ -159,7 +163,7 @@ module.exports = {
     },
 
     joinPublicIsland: async function (req, res) {
-        if(req.params.islandId && req.user) {
+        if (req.params.islandId && req.user) {
             Island.findByIdAndUpdate(req.params.islandId, { $push: { users: req.user } },
                 function (err, data) {
                     if (err) {
@@ -180,7 +184,7 @@ module.exports = {
     },
 
     leaveIsland: async function (req, res) {
-        if(req.params.islandId && req.user) {
+        if (req.params.islandId && req.user) {
             Island.findByIdAndUpdate(req.params.islandId, { $pull: { users: req.user } },
                 function (err, data) {
                     if (err) {
@@ -216,12 +220,16 @@ module.exports = {
     },
 
     getSingleThread: async function (req, res) {
-        let thread = await Thread.findById(req.params.threadId).populate('replies').lean();
-        console.log(thread);
-        res.render('thread', {
-            thread: thread,
-            islandId: req.params.islandId
-        });
+        try {
+            let thread = await Thread.findById(req.params.threadId).populate('replies').lean();
+            console.log(thread);
+            res.render('thread', {
+                thread: thread,
+                islandId: req.params.islandId
+            });
+        } catch (error) {
+            res.render('error');
+        }
 
     },
 
@@ -235,7 +243,7 @@ module.exports = {
                 function (err) {
                     if (err) {
                         console.log(err);
-                }
+                    }
                     else {
                         res.redirect('./');
                     }
@@ -270,7 +278,7 @@ module.exports = {
 
     addReply: async function (req, res) {
         if (req.params.threadId) {
-            const data = {author: req.user._id, content: req.body.content, replies: []}
+            const data = { author: req.user._id, content: req.body.content, replies: [] }
             const reply = await Reply.create(data);
             console.log(reply);
             Thread.findByIdAndUpdate(req.params.threadId, { $push: { replies: reply._id } },
@@ -288,7 +296,7 @@ module.exports = {
 
     addReplyToReply: async function (req, res) {
         if (req.params.threadId) {
-            const data = {author: req.user._id, content: req.body.content, replies: []}
+            const data = { author: req.user._id, content: req.body.content, replies: [] }
             const reply = await Reply.create(data);
             console.log(reply);
             Reply.findByIdAndUpdate(req.params.replyId, { $push: { replies: reply._id } },
