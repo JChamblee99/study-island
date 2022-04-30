@@ -84,9 +84,14 @@ const auth = {
 
     // Verifies user
     verifyEmail: async (req, res) => {
-        await authService.verifyEmail(req.params.token);
+        try {
+            await authService.verifyEmail(req.params.token);
 
-        res.redirect('/');
+            res.redirect('/');
+        } catch (error) {
+            res.render('error');
+        }
+
     }
 }
 

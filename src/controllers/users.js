@@ -13,32 +13,43 @@ const Reply = mongoose.model("Reply");
 module.exports = {
 
     getAllUsers: async function (req, res) {
-        User.find().then(function (allUsers) {
-            res.json({
-                status: "success",
-                data: { users: allUsers },
-            });
+        try {
+            User.find().then(function (allUsers) {
+                res.json({
+                    status: "success",
+                    data: { users: allUsers },
+                });
 
-        });
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
     },
 
     getUser: async (req, res) => {
-
+        try {
             let user = await User.findById(req.params.userId).populate("islands").lean();
             console.log(user);
             res.render('user', {
                 user: user
             });
+        } catch (error) {
+            res.render('error');
+        }
 
     },
 
     getCurrentUser: async (req, res) => {
+        try {
+            let user = await User.findById(req.user._id).populate("islands").lean();
+            console.log(user);
+            res.render('user', {
+                user: user
+            });
+        } catch (error) {
+            res.render('error');
+        }
 
-        let user = await User.findById(req.user._id).populate("islands").lean();
-        console.log(user);
-        res.render('user', {
-            user: user
-        });
-
-}
+    }
 }
